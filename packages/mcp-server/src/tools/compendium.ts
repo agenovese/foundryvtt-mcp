@@ -966,8 +966,39 @@ export class CompendiumTools {
     return sanitized;
   }
 
-  private stripHtml(text: string): string {
+  private stripHtml(text: string | any): string {
     if (!text) return '';
+
+    // Handle objects with value property (e.g., {value: "text"})
+    if (typeof text === 'object' && text !== null) {
+      if (text.value) {
+        text = text.value;
+      } else if (text.content) {
+        text = text.content;
+      } else {
+        // For other objects, try to stringify or return empty
+        try {
+          text = JSON.stringify(text);
+        } catch {
+          return '';
+        }
+      }
+    }
+
+    // Handle arrays
+    if (Array.isArray(text)) {
+      return text.map(item => this.stripHtml(item)).join(' ');
+    }
+
+    // Ensure we have a string before calling replace()
+    if (typeof text !== 'string') {
+      const stringified = String(text || '');
+      if (!stringified || stringified === '[object Object]') {
+        return '';
+      }
+      text = stringified;
+    }
+
     return text.replace(/<[^>]*>/g, '').trim();
   }
 

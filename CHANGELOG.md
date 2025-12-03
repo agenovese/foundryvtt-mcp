@@ -1,3 +1,39 @@
+## v0.6.1 (2025-12-03)
+
+### New Features
+
+- **DSA5 System Support** (PR #12 by @frankyh75)
+  - Full SystemAdapter implementation for Das Schwarze Auge 5
+  - Supports all 8 Eigenschaften (MU/KL/IN/CH/FF/GE/KO/KK)
+  - LeP, AsP, KaP resource tracking
+  - DSA5-specific filters: level, species, culture, size, hasSpells
+  - DSA5IndexBuilder for creature compendium indexing
+  - DSA5 character creation from archetypes
+
+- **Token Manipulation Tools** (PR #13)
+  - `move-token` - Move tokens with optional animation
+  - `update-token` - Update visibility, disposition, size, rotation, elevation
+  - `delete-tokens` - Bulk token deletion
+  - `get-token-details` - Detailed token info with linked actor data
+  - `toggle-token-condition` - Apply/remove status effects (prone, poisoned, etc.)
+  - `get-available-conditions` - List system-specific status effects
+
+- **Character API Optimization** (PR #9)
+  - Lazy-loading: `get-character` now returns minimal item metadata (no descriptions)
+  - New `get-character-entity` tool for on-demand full entity details
+  - Removed 20-item limit - now returns ALL items
+  - ~37% token reduction per character
+  - PF2e: traits, rarity, level, actionType
+  - D&D 5e: attunement status
+
+### Improvements
+
+- **Documentation** (PR #8)
+  - Clarified search-compendium limitations (name-only search, heuristic filters)
+  - Directed users to list-creatures-by-criteria for accurate filtering
+
+---
+
 ## v0.4.17 (2025-09-09)
 
 - Wrapper/backend architecture: convert MCP entry to a thin stdio wrapper that proxies to a singleton backend over `127.0.0.1:31414`.
