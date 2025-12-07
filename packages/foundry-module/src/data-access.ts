@@ -4430,40 +4430,30 @@ export class FoundryDataAccess {
         throw new Error(`Token ${data.tokenId} not found in current scene`);
       }
 
-      // Get disposition name
-      const dispositionMap: Record<number, string> = {
-        [-1]: 'hostile',
-        [0]: 'neutral',
-        [1]: 'friendly'
-      };
-
+      // Return flat structure that matches MCP server expectations
       return {
         success: true,
-        token: {
-          id: token.id,
-          name: token.name,
-          actorId: token.actor?.id,
-          actorName: token.actor?.name,
-          position: {
-            x: token.x,
-            y: token.y
-          },
-          dimensions: {
-            width: token.width,
-            height: token.height
-          },
-          scale: token.texture?.scaleX || 1,
-          rotation: token.rotation,
-          hidden: token.hidden,
-          disposition: dispositionMap[token.disposition] || 'neutral',
-          elevation: token.elevation,
-          img: token.texture?.src,
-          effects: token.actor?.effects?.contents.map((effect: any) => ({
-            id: effect.id,
-            name: effect.name || effect.label,
-            icon: effect.icon
-          })) || []
-        }
+        id: token.id,
+        name: token.name,
+        x: token.x,
+        y: token.y,
+        width: token.width,
+        height: token.height,
+        rotation: token.rotation,
+        scale: token.texture?.scaleX || 1,
+        alpha: token.alpha,
+        hidden: token.hidden,
+        disposition: token.disposition,
+        elevation: token.elevation,
+        lockRotation: token.lockRotation,
+        img: token.texture?.src,
+        actorId: token.actor?.id,
+        actorData: token.actor ? {
+          name: token.actor.name,
+          type: token.actor.type,
+          img: token.actor.img,
+        } : null,
+        actorLink: token.actorLink,
       };
     } catch (error) {
       throw new Error(`Failed to get token details: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -4513,19 +4503,48 @@ export class FoundryDataAccess {
       }
 
       if (data.active) {
-        // Add the condition
-        await actor.createEmbeddedDocuments('ActiveEffect', [{
-          name: condition.name || condition.id,
+        // Add the condition - handle DSA5 and other systems
+        const effectData: any = {
+          name: condition.name || condition.label || condition.id,
           icon: condition.icon || condition.img,
-          statuses: [condition.id]
-        }]);
+        };
+
+        // Add statuses for systems that support it (D&D5e, PF2e)
+        if (condition.id) {
+          effectData.statuses = [condition.id];
+        }
+
+        // DSA5-specific: Copy all properties from the condition
+        // DSA5 conditions have different structure than D&D5e/PF2e
+        if ((game.system as any)?.id === 'dsa5') {
+          // For DSA5, use the condition's full data structure
+          Object.assign(effectData, {
+            flags: condition.flags || {},
+            changes: condition.changes || [],
+            duration: condition.duration || {},
+            origin: condition.origin,
+          });
+        }
+
+        await actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
       } else {
         // Remove the condition
         const effects = actor.effects?.contents || [];
-        const effectsToRemove = effects.filter((effect: any) =>
-          effect.statuses?.has(data.conditionId) ||
-          effect.name?.toLowerCase() === data.conditionId.toLowerCase()
-        );
+        const effectsToRemove = effects.filter((effect: any) => {
+          // Check by status (D&D5e, PF2e)
+          if (effect.statuses?.has(data.conditionId)) {
+            return true;
+          }
+          // Check by name (fallback for all systems including DSA5)
+          if (effect.name?.toLowerCase() === data.conditionId.toLowerCase()) {
+            return true;
+          }
+          // Check by label (some systems use label instead of name)
+          if (effect.label?.toLowerCase() === data.conditionId.toLowerCase()) {
+            return true;
+          }
+          return false;
+        });
 
         if (effectsToRemove.length > 0) {
           await actor.deleteEmbeddedDocuments('ActiveEffect', effectsToRemove.map((e: any) => e.id));
@@ -4539,6 +4558,8 @@ export class FoundryDataAccess {
         tokenId: token.id,
         tokenName: token.name,
         conditionId: data.conditionId,
+        conditionName: condition.name || condition.label || condition.id,
+        isActive: data.active,
         active: data.active,
         message: data.active
           ? `Applied ${data.conditionId} to ${token.name}`
