@@ -179,6 +179,15 @@ Claude Desktop ↔ MCP Protocol ↔ MCP Server ↔ WebSocket ↔ Foundry Module 
 - **Claude Pro/Max Plan**: Required to connect to MCP servers
 - **Operating System**: Windows 10/11 (installer), or other OSes/manual Windows install with Node.js 18+ (manual)
 - **GPU Requirements**: A GPU with at least 8GB of VRAM
+
+## Schema Smoke Test
+
+The MCP schema smoke test verifies that tool schemas load correctly and do not enforce overly strict `additionalProperties` defaults.
+
+```bash
+npm -w @foundry-mcp/server run build
+npm run test:mcp:schema
+```
   
 ## Support & Development
 
