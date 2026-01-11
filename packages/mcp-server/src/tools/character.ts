@@ -3,13 +3,10 @@ import { FoundryClient } from '../foundry-client.js';
 import { Logger } from '../logger.js';
 import { SystemRegistry } from '../systems/system-registry.js';
 import { detectGameSystem, type GameSystem } from '../utils/system-detection.js';
-import { SystemRegistry } from '../systems/system-registry.js';
-import { detectGameSystem, type GameSystem } from '../utils/system-detection.js';
 
 export interface CharacterToolsOptions {
   foundryClient: FoundryClient;
   logger: Logger;
-  systemRegistry?: SystemRegistry;
   systemRegistry?: SystemRegistry;
 }
 
@@ -18,24 +15,10 @@ export class CharacterTools {
   private logger: Logger;
   private systemRegistry: SystemRegistry | null;
   private cachedGameSystem: GameSystem | null = null;
-  private systemRegistry: SystemRegistry | null;
-  private cachedGameSystem: GameSystem | null = null;
 
-  constructor({ foundryClient, logger, systemRegistry }: CharacterToolsOptions) {
   constructor({ foundryClient, logger, systemRegistry }: CharacterToolsOptions) {
     this.foundryClient = foundryClient;
     this.logger = logger.child({ component: 'CharacterTools' });
-    this.systemRegistry = systemRegistry || null;
-  }
-
-  /**
-   * Get or detect the game system (cached)
-   */
-  private async getGameSystem(): Promise<GameSystem> {
-    if (!this.cachedGameSystem) {
-      this.cachedGameSystem = await detectGameSystem(this.foundryClient, this.logger);
-    }
-    return this.cachedGameSystem;
     this.systemRegistry = systemRegistry || null;
   }
 
@@ -179,9 +162,7 @@ export class CharacterTools {
       });
 
       this.logger.debug('Successfully retrieved character data', {
-      this.logger.debug('Successfully retrieved character data', {
         characterId: characterData.id,
-        characterName: characterData.name
         characterName: characterData.name
       });
 
