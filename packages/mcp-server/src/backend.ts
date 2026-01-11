@@ -50,9 +50,6 @@ const normalizeJsonSchema = (schema: any): any => {
   const normalized = { ...schema };
 
   if (normalized.type === 'object') {
-    if (normalized.additionalProperties === undefined) {
-      normalized.additionalProperties = false;
-    }
     if (normalized.properties && typeof normalized.properties === 'object') {
       const nextProps: Record<string, any> = {};
       for (const [key, value] of Object.entries(normalized.properties)) {
