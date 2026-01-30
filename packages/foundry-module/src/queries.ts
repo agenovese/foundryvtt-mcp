@@ -97,6 +97,14 @@ export class QueryHandlers {
     // Character search queries
     CONFIG.queries[`${modulePrefix}.searchCharacterItems`] = this.handleSearchCharacterItems.bind(this);
 
+    // Phase 7: Token manipulation queries
+    CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
+    CONFIG.queries[`${modulePrefix}.update-token`] = this.handleUpdateToken.bind(this);
+    CONFIG.queries[`${modulePrefix}.delete-tokens`] = this.handleDeleteTokens.bind(this);
+    CONFIG.queries[`${modulePrefix}.get-token-details`] = this.handleGetTokenDetails.bind(this);
+    CONFIG.queries[`${modulePrefix}.toggle-token-condition`] = this.handleToggleTokenCondition.bind(this);
+    CONFIG.queries[`${modulePrefix}.get-available-conditions`] = this.handleGetAvailableConditions.bind(this);
+
   }
 
   /**
@@ -1084,10 +1092,17 @@ export class QueryHandlers {
     }
   }
 
+  // ===== PHASE 7: TOKEN MANIPULATION HANDLERS =====
+
   /**
    * Handle move token request
    */
-  private async handleMoveToken(data: any): Promise<any> {
+  private async handleMoveToken(data: {
+    tokenId: string;
+    x: number;
+    y: number;
+    animate?: boolean
+  }): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1096,7 +1111,15 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
-      return await this.dataAccess.moveToken(data.tokenId, data.x, data.y, data.animate);
+
+      if (!data.tokenId) {
+        throw new Error('tokenId is required');
+      }
+      if (typeof data.x !== 'number' || typeof data.y !== 'number') {
+        throw new Error('x and y coordinates are required and must be numbers');
+      }
+
+      return await this.dataAccess.moveToken(data);
     } catch (error) {
       throw new Error(`Failed to move token: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1105,7 +1128,10 @@ export class QueryHandlers {
   /**
    * Handle update token request
    */
-  private async handleUpdateToken(data: any): Promise<any> {
+  private async handleUpdateToken(data: {
+    tokenId: string;
+    updates: Record<string, any>
+  }): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1114,7 +1140,15 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
-      return await this.dataAccess.updateToken(data.tokenId, data.updates);
+
+      if (!data.tokenId) {
+        throw new Error('tokenId is required');
+      }
+      if (!data.updates || typeof data.updates !== 'object') {
+        throw new Error('updates object is required');
+      }
+
+      return await this.dataAccess.updateToken(data);
     } catch (error) {
       throw new Error(`Failed to update token: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1123,7 +1157,7 @@ export class QueryHandlers {
   /**
    * Handle delete tokens request
    */
-  private async handleDeleteTokens(data: any): Promise<any> {
+  private async handleDeleteTokens(data: { tokenIds: string[] }): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1132,7 +1166,12 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
-      return await this.dataAccess.deleteTokens(data.tokenIds);
+
+      if (!data.tokenIds || !Array.isArray(data.tokenIds) || data.tokenIds.length === 0) {
+        throw new Error('tokenIds array is required and must not be empty');
+      }
+
+      return await this.dataAccess.deleteTokens(data);
     } catch (error) {
       throw new Error(`Failed to delete tokens: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1141,7 +1180,7 @@ export class QueryHandlers {
   /**
    * Handle get token details request
    */
-  private async handleGetTokenDetails(data: any): Promise<any> {
+  private async handleGetTokenDetails(data: { tokenId: string }): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1150,7 +1189,12 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
-      return await this.dataAccess.getTokenDetails(data.tokenId);
+
+      if (!data.tokenId) {
+        throw new Error('tokenId is required');
+      }
+
+      return await this.dataAccess.getTokenDetails(data);
     } catch (error) {
       throw new Error(`Failed to get token details: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1159,7 +1203,11 @@ export class QueryHandlers {
   /**
    * Handle toggle token condition request
    */
-  private async handleToggleTokenCondition(data: any): Promise<any> {
+  private async handleToggleTokenCondition(data: {
+    tokenId: string;
+    conditionId: string;
+    active: boolean
+  }): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1168,7 +1216,18 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
-      return await this.dataAccess.toggleTokenCondition(data.tokenId, data.conditionId, data.active);
+
+      if (!data.tokenId) {
+        throw new Error('tokenId is required');
+      }
+      if (!data.conditionId) {
+        throw new Error('conditionId is required');
+      }
+      if (typeof data.active !== 'boolean') {
+        throw new Error('active must be a boolean');
+      }
+
+      return await this.dataAccess.toggleTokenCondition(data);
     } catch (error) {
       throw new Error(`Failed to toggle token condition: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1177,7 +1236,7 @@ export class QueryHandlers {
   /**
    * Handle get available conditions request
    */
-  private async handleGetAvailableConditions(_data: any): Promise<any> {
+  private async handleGetAvailableConditions(): Promise<any> {
     try {
       // SECURITY: Silent GM validation
       const gmCheck = this.validateGMAccess();
@@ -1186,6 +1245,7 @@ export class QueryHandlers {
       }
 
       this.dataAccess.validateFoundryState();
+
       return await this.dataAccess.getAvailableConditions();
     } catch (error) {
       throw new Error(`Failed to get available conditions: ${error instanceof Error ? error.message : 'Unknown error'}`);

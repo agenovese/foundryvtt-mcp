@@ -55,6 +55,7 @@ This project was built with the assistance of Claude Code. If you like this proj
 2. Select install module in the Foundry Add-ons menu
 2. At the bottom of the window, add the Manifest URL as: https://github.com/adambdooley/foundry-vtt-mcp/blob/master/packages/foundry-module/module.json and click install
 3. Enable "Foundry MCP Bridge" in Module Management
+   - **Do not change the module ID or folder name.** The MCP backend and the Claude integration both expect the module to live in a directory called `foundry-mcp-bridge`. Renaming the ID in `module.json` breaks socket routing and stops Claude from seeing the backend.
 
 #### Install the MCP Server
 ```bash
@@ -107,8 +108,9 @@ Once connected, ask Claude Desktop:
 
 ## Features
 
-- **25 MCP Tools** that allow Claude to interact with Foundry
-- **Character Management**: Access stats, abilities, and inventory
+- **33 MCP Tools** that allow Claude to interact with Foundry
+- **Character Management**: Access stats, abilities, inventory, and detailed entity information
+- **Token Manipulation**: Move, update, delete tokens and manage status conditions
 - **Enhanced Compendium Search**: Instant filtering by CR, type, abilities, and more
 - **Content Creation**: Generate actors, NPCs, and quest journals
 - **Campaign Management**: Multi-part quest tracking with progress dashboards
@@ -177,6 +179,15 @@ Claude Desktop ↔ MCP Protocol ↔ MCP Server ↔ WebSocket ↔ Foundry Module 
 - **Claude Pro/Max Plan**: Required to connect to MCP servers
 - **Operating System**: Windows 10/11 (installer), or other OSes/manual Windows install with Node.js 18+ (manual)
 - **GPU Requirements**: A GPU with at least 8GB of VRAM
+
+## Schema Smoke Test
+
+The MCP schema smoke test verifies that tool schemas load correctly and do not enforce overly strict `additionalProperties` defaults.
+
+```bash
+npm -w @foundry-mcp/server run build
+npm run test:mcp:schema
+```
   
 ## Support & Development
 
