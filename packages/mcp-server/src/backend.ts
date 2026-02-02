@@ -34,6 +34,8 @@ import { MapGenerationTools } from './tools/map-generation.js';
 
 import { TokenManipulationTools } from './tools/token-manipulation.js';
 
+import { DocumentManagementTools } from './tools/document-management.js';
+
 import { DSA5CharacterCreator } from './systems/dsa5/character-creator.js';
 
 const CONTROL_HOST = '127.0.0.1';
@@ -1078,6 +1080,8 @@ async function startBackend(): Promise<void> {
 
   const tokenManipulationTools = new TokenManipulationTools({ foundryClient, logger });
 
+  const documentManagementTools = new DocumentManagementTools({ foundryClient, logger });
+
   // Initialize mapgen-style backend components for map generation
   let mapGenerationJobQueue: any = null;
   let mapGenerationComfyUIClient: any = null;
@@ -1310,6 +1314,8 @@ async function startBackend(): Promise<void> {
     ...tokenManipulationTools.getToolDefinitions(),
 
     ...mapGenerationTools.getToolDefinitions(),
+
+    ...documentManagementTools.getToolDefinitions(),
 
   ];
 
@@ -1632,6 +1638,20 @@ async function startBackend(): Promise<void> {
                 case 'switch-scene':
 
                   result = await mapGenerationTools.switchScene(args);
+
+                  break;
+
+                // Document management tools
+
+                case 'create-document':
+
+                  result = await documentManagementTools.handleCreateDocument(args);
+
+                  break;
+
+                case 'update-document':
+
+                  result = await documentManagementTools.handleUpdateDocument(args);
 
                   break;
 

@@ -97,6 +97,10 @@ export class QueryHandlers {
     // Character search queries
     CONFIG.queries[`${modulePrefix}.searchCharacterItems`] = this.handleSearchCharacterItems.bind(this);
 
+    // Document management queries
+    CONFIG.queries[`${modulePrefix}.createDocument`] = this.handleCreateDocument.bind(this);
+    CONFIG.queries[`${modulePrefix}.updateDocument`] = this.handleUpdateDocument.bind(this);
+
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
     CONFIG.queries[`${modulePrefix}.update-token`] = this.handleUpdateToken.bind(this);
@@ -1325,6 +1329,87 @@ export class QueryHandlers {
       });
     } catch (error) {
       throw new Error(`Failed to search character items: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // ===== DOCUMENT MANAGEMENT HANDLERS =====
+
+  /**
+   * Handle generic document creation from raw JSON
+   */
+  private async handleCreateDocument(data: {
+    documentType: 'Actor' | 'Item';
+    data: Record<string, any>;
+    folderName?: string;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.data || typeof data.data !== 'object') {
+        throw new Error('data object is required');
+      }
+      if (!data.data.name || typeof data.data.name !== 'string') {
+        throw new Error('data.name is required and must be a string');
+      }
+      if (!data.data.type || typeof data.data.type !== 'string') {
+        throw new Error('data.type is required and must be a string');
+      }
+      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor" or "Item"');
+      }
+
+      return await this.dataAccess.createDocument({
+        documentType: data.documentType,
+        data: data.data,
+        folderName: data.folderName,
+      });
+    } catch (error) {
+      throw new Error(`Failed to create document: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle generic document update
+   */
+  private async handleUpdateDocument(data: {
+    documentType: 'Actor' | 'Item';
+    documentId: string;
+    updates?: Record<string, any>;
+    addItems?: Array<Record<string, any>>;
+    removeItemIds?: string[];
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.documentId || typeof data.documentId !== 'string') {
+        throw new Error('documentId is required');
+      }
+      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor" or "Item"');
+      }
+      if (!data.updates && !data.addItems && !data.removeItemIds) {
+        throw new Error('At least one of updates, addItems, or removeItemIds must be provided');
+      }
+
+      return await this.dataAccess.updateDocument({
+        documentType: data.documentType,
+        documentId: data.documentId,
+        updates: data.updates,
+        addItems: data.addItems,
+        removeItemIds: data.removeItemIds,
+      });
+    } catch (error) {
+      throw new Error(`Failed to update document: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

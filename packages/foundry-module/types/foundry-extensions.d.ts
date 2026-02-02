@@ -27,6 +27,8 @@ declare global {
     };
     version: string;
     actors: Collection<Actor>;
+    items: Collection<Item>;
+    folders: Collection<any>;
     scenes: Collection<Scene>;
     packs: Collection<CompendiumCollection>;
     users: Collection<User>;

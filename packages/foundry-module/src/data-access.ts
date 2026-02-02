@@ -4856,7 +4856,7 @@ export class FoundryDataAccess {
   /**
    * Get or create a folder for organizing MCP-generated content
    */
-  private async getOrCreateFolder(folderName: string, type: 'Actor' | 'JournalEntry'): Promise<string | null> {
+  private async getOrCreateFolder(folderName: string, type: 'Actor' | 'Item' | 'JournalEntry'): Promise<string | null> {
     try {
       // Look for existing folder
       const existingFolder = game.folders?.find((f: any) => 
@@ -4869,12 +4869,17 @@ export class FoundryDataAccess {
 
       // Create appropriate descriptions
       let description = '';
+      let color = '#f39c12'; // Default: orange for journals
       if (type === 'Actor') {
         if (folderName === 'Foundry MCP Creatures') {
           description = 'Creatures and monsters created via Foundry MCP Bridge';
         } else {
           description = `NPCs and creatures related to: ${folderName}`;
         }
+        color = '#4a90e2'; // Blue for actors
+      } else if (type === 'Item') {
+        description = `Items created via Foundry MCP Bridge: ${folderName}`;
+        color = '#27ae60'; // Green for items
       } else {
         description = `Quest and content for: ${folderName}`;
       }
@@ -4884,7 +4889,7 @@ export class FoundryDataAccess {
         name: folderName,
         type: type,
         description: description,
-        color: type === 'Actor' ? '#4a90e2' : '#f39c12', // Blue for actors, orange for journals
+        color: color,
         sort: 0,
         parent: null,
         flags: {
@@ -5654,6 +5659,167 @@ export class FoundryDataAccess {
       }, 'failure', error instanceof Error ? error.message : 'Unknown error');
 
       throw new Error(`Failed to use item "${item.name}": ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // ===== GENERIC DOCUMENT MANAGEMENT =====
+
+  /**
+   * Create a document (Actor or Item) from raw JSON data
+   */
+  async createDocument(request: {
+    documentType: 'Actor' | 'Item';
+    data: Record<string, any>;
+    folderName?: string | undefined;
+  }): Promise<{ id: string; name: string }> {
+    this.validateFoundryState();
+
+    const permissionCheck = permissionManager.checkWritePermission('createActor', {
+      quantity: 1,
+    });
+    if (!permissionCheck.allowed) {
+      throw new Error(`Document creation denied: ${permissionCheck.reason}`);
+    }
+
+    try {
+      const { documentType, data, folderName } = request;
+
+      // Strip _id to avoid conflicts
+      const cleanData = { ...data };
+      delete cleanData._id;
+
+      // Also strip _id from any embedded items/effects
+      if (Array.isArray(cleanData.items)) {
+        cleanData.items = cleanData.items.map((item: any) => {
+          const cleanItem = { ...item };
+          delete cleanItem._id;
+          return cleanItem;
+        });
+      }
+      if (Array.isArray(cleanData.effects)) {
+        cleanData.effects = cleanData.effects.map((effect: any) => {
+          const cleanEffect = { ...effect };
+          delete cleanEffect._id;
+          return cleanEffect;
+        });
+      }
+
+      // Organize into a folder
+      const defaultFolderName = documentType === 'Actor' ? 'MCP Created Actors' : 'MCP Created Items';
+      const folderId = await this.getOrCreateFolder(folderName || defaultFolderName, documentType);
+      if (folderId) {
+        cleanData.folder = folderId;
+      }
+
+      let doc: any;
+      if (documentType === 'Actor') {
+        doc = await Actor.create(cleanData as any);
+      } else {
+        doc = await Item.create(cleanData as any);
+      }
+
+      if (!doc) {
+        throw new Error(`Failed to create ${documentType}`);
+      }
+
+      const result = {
+        id: doc.id,
+        name: doc.name || data.name,
+      };
+
+      this.auditLog('createDocument', { documentType, name: data.name, type: data.type }, 'success');
+      return result;
+
+    } catch (error) {
+      this.auditLog('createDocument', request, 'failure', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
+    }
+  }
+
+  /**
+   * Update an existing document (Actor or Item) with partial data, add/remove embedded items
+   */
+  async updateDocument(request: {
+    documentType: 'Actor' | 'Item';
+    documentId: string;
+    updates?: Record<string, any> | undefined;
+    addItems?: Array<Record<string, any>> | undefined;
+    removeItemIds?: string[] | undefined;
+  }): Promise<{ name: string; updatedFields?: number; itemsAdded?: number; itemsRemoved?: number }> {
+    this.validateFoundryState();
+
+    const permissionCheck = permissionManager.checkWritePermission('modifyScene');
+    if (!permissionCheck.allowed) {
+      throw new Error(`Document update denied: ${permissionCheck.reason}`);
+    }
+
+    try {
+      const { documentType, documentId, updates, addItems, removeItemIds } = request;
+
+      // Find the document
+      let doc: any;
+      if (documentType === 'Actor') {
+        doc = game.actors?.get(documentId);
+      } else {
+        doc = game.items?.get(documentId);
+      }
+
+      if (!doc) {
+        throw new Error(`${documentType} with ID "${documentId}" not found`);
+      }
+
+      let updatedFields = 0;
+      let itemsAdded = 0;
+      let itemsRemoved = 0;
+
+      // Apply direct updates
+      if (updates && Object.keys(updates).length > 0) {
+        const cleanUpdates = { ...updates };
+        delete cleanUpdates._id;
+        await doc.update(cleanUpdates);
+        updatedFields = Object.keys(cleanUpdates).length;
+      }
+
+      // Remove embedded items (do this before adding to avoid ID conflicts)
+      if (removeItemIds && removeItemIds.length > 0 && documentType === 'Actor') {
+        // Validate that the IDs exist on the actor
+        const existingItemIds = new Set(doc.items?.map((i: any) => i.id) || []);
+        const validIds = removeItemIds.filter(id => existingItemIds.has(id));
+        if (validIds.length > 0) {
+          await doc.deleteEmbeddedDocuments('Item', validIds);
+          itemsRemoved = validIds.length;
+        }
+      }
+
+      // Add embedded items
+      if (addItems && addItems.length > 0 && documentType === 'Actor') {
+        const cleanItems = addItems.map((item: any) => {
+          const clean = { ...item };
+          delete clean._id;
+          return clean;
+        });
+        await doc.createEmbeddedDocuments('Item', cleanItems);
+        itemsAdded = cleanItems.length;
+      }
+
+      const result: any = { name: doc.name };
+      if (updatedFields > 0) result.updatedFields = updatedFields;
+      if (itemsAdded > 0) result.itemsAdded = itemsAdded;
+      if (itemsRemoved > 0) result.itemsRemoved = itemsRemoved;
+
+      this.auditLog('updateDocument', {
+        documentType,
+        documentId,
+        updatedFields,
+        itemsAdded,
+        itemsRemoved,
+      }, 'success');
+
+      return result;
+
+    } catch (error) {
+      this.auditLog('updateDocument', request, 'failure', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
     }
   }
 
