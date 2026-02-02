@@ -1661,6 +1661,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'browse-files':
+
+                  result = await documentManagementTools.handleBrowseFiles(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);

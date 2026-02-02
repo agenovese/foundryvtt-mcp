@@ -101,6 +101,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.createDocument`] = this.handleCreateDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.updateDocument`] = this.handleUpdateDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.deleteDocument`] = this.handleDeleteDocument.bind(this);
+    CONFIG.queries[`${modulePrefix}.browseFiles`] = this.handleBrowseFiles.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -1442,6 +1443,38 @@ export class QueryHandlers {
       });
     } catch (error) {
       throw new Error(`Failed to delete document: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle file browsing via FilePicker
+   */
+  private async handleBrowseFiles(data: {
+    source?: string;
+    target: string;
+    extensions?: string[];
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      const source = data.source || 'public';
+      const target = data.target || '';
+      const options: any = {};
+      if (data.extensions?.length) {
+        options.extensions = data.extensions;
+      }
+
+      const result = await (FilePicker as any).browse(source, target, options);
+      return {
+        target: result.target,
+        dirs: result.dirs || [],
+        files: result.files || [],
+      };
+    } catch (error) {
+      throw new Error(`Failed to browse files: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

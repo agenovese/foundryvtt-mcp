@@ -96,6 +96,30 @@ export class DocumentManagementTools {
           required: ['documentType', 'documentId'],
         },
       },
+      {
+        name: 'browse-files',
+        description: 'Browse files and directories in Foundry VTT. Use this to discover available icons, images, and other assets. Returns lists of files and subdirectories at the given path.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            source: {
+              type: 'string',
+              enum: ['public', 'data'],
+              description: 'File storage source. "public" for core Foundry assets (icons, etc.), "data" for user-uploaded files. Defaults to "public".',
+            },
+            target: {
+              type: 'string',
+              description: 'Directory path to browse (e.g., "icons/creatures/mammals", "icons/magic"). Defaults to root.',
+            },
+            extensions: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Optional file extension filter (e.g., [".webp", ".png"]).',
+            },
+          },
+          required: ['target'],
+        },
+      },
     ];
   }
 
@@ -240,6 +264,36 @@ export class DocumentManagementTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'delete-document', 'document deletion');
+    }
+  }
+
+  async handleBrowseFiles(args: any): Promise<any> {
+    const schema = z.object({
+      source: z.enum(['public', 'data']).optional().default('public'),
+      target: z.string().default(''),
+      extensions: z.array(z.string()).optional(),
+    });
+
+    const { source, target, extensions } = schema.parse(args);
+
+    this.logger.info('Browsing files', { source, target, extensions });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.browseFiles', {
+        source,
+        target,
+        extensions,
+      });
+
+      return {
+        target: result.target,
+        dirs: result.dirs,
+        files: result.files,
+        fileCount: result.files.length,
+        dirCount: result.dirs.length,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'browse-files', 'file browsing');
     }
   }
 }
