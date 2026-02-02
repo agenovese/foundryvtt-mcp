@@ -1655,6 +1655,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'delete-document':
+
+                  result = await documentManagementTools.handleDeleteDocument(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);

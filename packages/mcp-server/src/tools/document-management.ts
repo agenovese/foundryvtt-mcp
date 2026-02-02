@@ -77,6 +77,25 @@ export class DocumentManagementTools {
           required: ['documentType', 'documentId'],
         },
       },
+      {
+        name: 'delete-document',
+        description: 'Delete a Foundry VTT document (Actor or Item) by ID. This is permanent and cannot be undone.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            documentType: {
+              type: 'string',
+              enum: ['Actor', 'Item'],
+              description: 'The Foundry document type to delete',
+            },
+            documentId: {
+              type: 'string',
+              description: 'ID of the document to delete',
+            },
+          },
+          required: ['documentType', 'documentId'],
+        },
+      },
     ];
   }
 
@@ -187,6 +206,40 @@ export class DocumentManagementTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'update-document', 'document update');
+    }
+  }
+
+  async handleDeleteDocument(args: any): Promise<any> {
+    const schema = z.object({
+      documentType: z.enum(['Actor', 'Item']),
+      documentId: z.string().min(1, 'Document ID is required'),
+    });
+
+    const { documentType, documentId } = schema.parse(args);
+
+    this.logger.info('Deleting document', { documentType, documentId });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.deleteDocument', {
+        documentType,
+        documentId,
+      });
+
+      this.logger.info('Document deleted', {
+        documentType,
+        documentId,
+        name: result.name,
+      });
+
+      return {
+        success: true,
+        documentType,
+        id: documentId,
+        name: result.name,
+        message: `Deleted ${documentType} "${result.name}" (ID: ${documentId})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'delete-document', 'document deletion');
     }
   }
 }

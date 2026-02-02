@@ -100,6 +100,7 @@ export class QueryHandlers {
     // Document management queries
     CONFIG.queries[`${modulePrefix}.createDocument`] = this.handleCreateDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.updateDocument`] = this.handleUpdateDocument.bind(this);
+    CONFIG.queries[`${modulePrefix}.deleteDocument`] = this.handleDeleteDocument.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -1410,6 +1411,37 @@ export class QueryHandlers {
       });
     } catch (error) {
       throw new Error(`Failed to update document: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle generic document deletion
+   */
+  private async handleDeleteDocument(data: {
+    documentType: 'Actor' | 'Item';
+    documentId: string;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.documentId || typeof data.documentId !== 'string') {
+        throw new Error('documentId is required');
+      }
+      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor" or "Item"');
+      }
+
+      return await this.dataAccess.deleteDocument({
+        documentType: data.documentType,
+        documentId: data.documentId,
+      });
+    } catch (error) {
+      throw new Error(`Failed to delete document: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

@@ -5823,4 +5823,44 @@ export class FoundryDataAccess {
     }
   }
 
+  /**
+   * Delete a document (Actor or Item) by ID
+   */
+  async deleteDocument(request: {
+    documentType: 'Actor' | 'Item';
+    documentId: string;
+  }): Promise<{ name: string }> {
+    this.validateFoundryState();
+
+    const permissionCheck = permissionManager.checkWritePermission('modifyScene');
+    if (!permissionCheck.allowed) {
+      throw new Error(`Document deletion denied: ${permissionCheck.reason}`);
+    }
+
+    try {
+      const { documentType, documentId } = request;
+
+      let doc: any;
+      if (documentType === 'Actor') {
+        doc = game.actors?.get(documentId);
+      } else {
+        doc = game.items?.get(documentId);
+      }
+
+      if (!doc) {
+        throw new Error(`${documentType} with ID "${documentId}" not found`);
+      }
+
+      const name = doc.name;
+      await doc.delete();
+
+      this.auditLog('deleteDocument', { documentType, documentId, name }, 'success');
+      return { name };
+
+    } catch (error) {
+      this.auditLog('deleteDocument', request, 'failure', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
+    }
+  }
+
 }
