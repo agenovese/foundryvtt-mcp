@@ -1527,7 +1527,7 @@ export class QueryHandlers {
         return { error: 'Access denied', success: false };
       }
 
-      let folders = Array.from((game as any).folders);
+      let folders = (game as any).folders.contents as any[];
       if (data.type) {
         folders = folders.filter((f: any) => f.type === data.type);
       }
