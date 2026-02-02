@@ -120,6 +120,61 @@ export class DocumentManagementTools {
           required: ['target'],
         },
       },
+      {
+        name: 'create-folder',
+        description: 'Create a folder in Foundry VTT to organize documents. Supports nested folders via the parent parameter.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'Name of the folder to create',
+            },
+            type: {
+              type: 'string',
+              enum: ['Actor', 'Item', 'Scene', 'JournalEntry', 'RollTable', 'Compendium'],
+              description: 'The document type this folder will contain',
+            },
+            parent: {
+              type: 'string',
+              description: 'ID of the parent folder for nesting. Omit for top-level folders.',
+            },
+          },
+          required: ['name', 'type'],
+        },
+      },
+      {
+        name: 'list-folders',
+        description: 'List all folders in the world, optionally filtered by document type.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['Actor', 'Item', 'Scene', 'JournalEntry', 'RollTable', 'Compendium'],
+              description: 'Filter by folder type',
+            },
+          },
+        },
+      },
+      {
+        name: 'delete-folder',
+        description: 'Delete a folder from the world. By default, contents are moved to the parent folder. Use deleteContents to also delete all items within.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            folderId: {
+              type: 'string',
+              description: 'ID of the folder to delete',
+            },
+            deleteContents: {
+              type: 'boolean',
+              description: 'If true, also delete all documents within the folder. If false (default), contents are moved to the parent folder.',
+            },
+          },
+          required: ['folderId'],
+        },
+      },
     ];
   }
 
@@ -294,6 +349,87 @@ export class DocumentManagementTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'browse-files', 'file browsing');
+    }
+  }
+
+  async handleCreateFolder(args: any): Promise<any> {
+    const schema = z.object({
+      name: z.string().min(1, 'Folder name is required'),
+      type: z.string().min(1, 'Folder type is required'),
+      parent: z.string().optional(),
+    });
+
+    const { name, type, parent } = schema.parse(args);
+
+    this.logger.info('Creating folder', { name, type, parent });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.createFolder', {
+        name,
+        type,
+        parent: parent || null,
+      });
+
+      return {
+        success: true,
+        id: result.id,
+        name: result.name,
+        type: result.type,
+        parent: result.parent,
+        message: `Created ${type} folder "${result.name}" (ID: ${result.id})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'create-folder', 'folder creation');
+    }
+  }
+
+  async handleListFolders(args: any): Promise<any> {
+    const schema = z.object({
+      type: z.string().optional(),
+    });
+
+    const { type } = schema.parse(args);
+
+    this.logger.info('Listing folders', { type });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.listFolders', {
+        type,
+      });
+
+      return {
+        folders: result.folders,
+        count: result.folders.length,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'list-folders', 'folder listing');
+    }
+  }
+
+  async handleDeleteFolder(args: any): Promise<any> {
+    const schema = z.object({
+      folderId: z.string().min(1, 'Folder ID is required'),
+      deleteContents: z.boolean().optional().default(false),
+    });
+
+    const { folderId, deleteContents } = schema.parse(args);
+
+    this.logger.info('Deleting folder', { folderId, deleteContents });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.deleteFolder', {
+        folderId,
+        deleteContents,
+      });
+
+      return {
+        success: true,
+        id: folderId,
+        name: result.name,
+        message: `Deleted folder "${result.name}" (ID: ${folderId})${deleteContents ? ' and all contents' : ''}`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'delete-folder', 'folder deletion');
     }
   }
 }

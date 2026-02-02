@@ -102,6 +102,9 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.updateDocument`] = this.handleUpdateDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.deleteDocument`] = this.handleDeleteDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.browseFiles`] = this.handleBrowseFiles.bind(this);
+    CONFIG.queries[`${modulePrefix}.createFolder`] = this.handleCreateFolder.bind(this);
+    CONFIG.queries[`${modulePrefix}.listFolders`] = this.handleListFolders.bind(this);
+    CONFIG.queries[`${modulePrefix}.deleteFolder`] = this.handleDeleteFolder.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -1475,6 +1478,95 @@ export class QueryHandlers {
       };
     } catch (error) {
       throw new Error(`Failed to browse files: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle folder creation
+   */
+  private async handleCreateFolder(data: {
+    name: string;
+    type: string;
+    parent?: string | null;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      const folderData: any = {
+        name: data.name,
+        type: data.type,
+      };
+      if (data.parent) {
+        folderData.folder = data.parent;
+      }
+
+      const folder = await (Folder as any).create(folderData);
+      return {
+        id: folder.id,
+        name: folder.name,
+        type: folder.type,
+        parent: folder.folder?.id || null,
+      };
+    } catch (error) {
+      throw new Error(`Failed to create folder: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle listing folders
+   */
+  private async handleListFolders(data: {
+    type?: string;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      let folders = Array.from((game as any).folders);
+      if (data.type) {
+        folders = folders.filter((f: any) => f.type === data.type);
+      }
+      return {
+        folders: folders.map((f: any) => ({
+          id: f.id,
+          name: f.name,
+          type: f.type,
+          parent: f.folder?.id || null,
+        })),
+      };
+    } catch (error) {
+      throw new Error(`Failed to list folders: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle folder deletion
+   */
+  private async handleDeleteFolder(data: {
+    folderId: string;
+    deleteContents?: boolean;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      const folder = (game as any).folders.get(data.folderId);
+      if (!folder) {
+        throw new Error(`Folder not found: ${data.folderId}`);
+      }
+
+      const name = folder.name;
+      await folder.delete({ deleteSubfolders: true, deleteContents: data.deleteContents || false });
+      return { name };
+    } catch (error) {
+      throw new Error(`Failed to delete folder: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

@@ -1667,6 +1667,24 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'create-folder':
+
+                  result = await documentManagementTools.handleCreateFolder(args);
+
+                  break;
+
+                case 'list-folders':
+
+                  result = await documentManagementTools.handleListFolders(args);
+
+                  break;
+
+                case 'delete-folder':
+
+                  result = await documentManagementTools.handleDeleteFolder(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);
