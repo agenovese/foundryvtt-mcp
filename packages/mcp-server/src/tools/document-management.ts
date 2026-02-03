@@ -175,6 +175,28 @@ export class DocumentManagementTools {
           required: ['folderId'],
         },
       },
+      {
+        name: 'update-folder',
+        description: 'Update a folder (rename or move to a different parent folder).',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            folderId: {
+              type: 'string',
+              description: 'ID of the folder to update',
+            },
+            name: {
+              type: 'string',
+              description: 'New name for the folder',
+            },
+            parent: {
+              type: 'string',
+              description: 'ID of the new parent folder. Use null to move to top level.',
+            },
+          },
+          required: ['folderId'],
+        },
+      },
     ];
   }
 
@@ -430,6 +452,37 @@ export class DocumentManagementTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'delete-folder', 'folder deletion');
+    }
+  }
+
+  async handleUpdateFolder(args: any): Promise<any> {
+    const schema = z.object({
+      folderId: z.string().min(1, 'Folder ID is required'),
+      name: z.string().optional(),
+      parent: z.string().nullable().optional(),
+    });
+
+    const { folderId, name, parent } = schema.parse(args);
+
+    this.logger.info('Updating folder', { folderId, name, parent });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.updateFolder', {
+        folderId,
+        name,
+        parent,
+      });
+
+      return {
+        success: true,
+        id: result.id,
+        name: result.name,
+        type: result.type,
+        parent: result.parent,
+        message: `Updated folder "${result.name}" (ID: ${result.id})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'update-folder', 'folder update');
     }
   }
 }

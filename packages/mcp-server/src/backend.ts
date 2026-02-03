@@ -1685,6 +1685,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'update-folder':
+
+                  result = await documentManagementTools.handleUpdateFolder(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);

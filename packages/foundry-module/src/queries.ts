@@ -105,6 +105,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.createFolder`] = this.handleCreateFolder.bind(this);
     CONFIG.queries[`${modulePrefix}.listFolders`] = this.handleListFolders.bind(this);
     CONFIG.queries[`${modulePrefix}.deleteFolder`] = this.handleDeleteFolder.bind(this);
+    CONFIG.queries[`${modulePrefix}.updateFolder`] = this.handleUpdateFolder.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -1567,6 +1568,41 @@ export class QueryHandlers {
       return { name };
     } catch (error) {
       throw new Error(`Failed to delete folder: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle folder update (rename or reparent)
+   */
+  private async handleUpdateFolder(data: {
+    folderId: string;
+    name?: string;
+    parent?: string | null;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      const folder = (game as any).folders.get(data.folderId);
+      if (!folder) {
+        throw new Error(`Folder not found: ${data.folderId}`);
+      }
+
+      const updates: any = {};
+      if (data.name !== undefined) updates.name = data.name;
+      if (data.parent !== undefined) updates.folder = data.parent;
+
+      await folder.update(updates);
+      return {
+        id: folder.id,
+        name: folder.name,
+        type: folder.type,
+        parent: folder.folder?.id || null,
+      };
+    } catch (error) {
+      throw new Error(`Failed to update folder: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
