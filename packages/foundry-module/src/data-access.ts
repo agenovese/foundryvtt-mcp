@@ -5722,10 +5722,18 @@ export class FoundryDataAccess {
         throw new Error(`Failed to create ${documentType}`);
       }
 
-      const result = {
+      const result: any = {
         id: doc.id,
         name: doc.name || data.name,
       };
+
+      // Include effect IDs so callers can reference them (e.g., in activity effect links)
+      if (doc.effects?.size > 0) {
+        result.effects = Array.from(doc.effects).map((e: any) => ({
+          id: e.id,
+          name: e.name,
+        }));
+      }
 
       this.auditLog('createDocument', { documentType, name: data.name, type: data.type }, 'success');
       return result;

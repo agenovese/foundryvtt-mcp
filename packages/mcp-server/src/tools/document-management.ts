@@ -232,13 +232,20 @@ export class DocumentManagementTools {
         name: result.name,
       });
 
-      return {
+      const response: any = {
         success: true,
         documentType,
         id: result.id,
         name: result.name,
         message: `Created ${documentType} "${result.name}" (ID: ${result.id})`,
       };
+
+      // Include effect IDs so callers can link them to activities
+      if (result.effects?.length > 0) {
+        response.effects = result.effects;
+      }
+
+      return response;
     } catch (error) {
       this.errorHandler.handleToolError(error, 'create-document', 'document creation');
     }
