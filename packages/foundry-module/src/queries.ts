@@ -100,6 +100,7 @@ export class QueryHandlers {
 
     // Document management queries
     CONFIG.queries[`${modulePrefix}.createDocument`] = this.handleCreateDocument.bind(this);
+    CONFIG.queries[`${modulePrefix}.batchCreateDocuments`] = this.handleBatchCreateDocuments.bind(this);
     CONFIG.queries[`${modulePrefix}.updateDocument`] = this.handleUpdateDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.deleteDocument`] = this.handleDeleteDocument.bind(this);
     CONFIG.queries[`${modulePrefix}.browseFiles`] = this.handleBrowseFiles.bind(this);
@@ -1394,6 +1395,39 @@ export class QueryHandlers {
       });
     } catch (error) {
       throw new Error(`Failed to create document: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle batch document creation
+   */
+  private async handleBatchCreateDocuments(data: {
+    documentType: 'Actor' | 'Item';
+    documents: Array<Record<string, any>>;
+    folderId?: string;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor" or "Item"');
+      }
+      if (!Array.isArray(data.documents) || data.documents.length === 0) {
+        throw new Error('documents array is required and must not be empty');
+      }
+
+      return await this.dataAccess.batchCreateDocuments({
+        documentType: data.documentType,
+        documents: data.documents,
+        folderId: data.folderId,
+      });
+    } catch (error) {
+      throw new Error(`Failed to batch create documents: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

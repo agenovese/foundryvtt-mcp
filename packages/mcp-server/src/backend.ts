@@ -1655,6 +1655,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'batch-create-documents':
+
+                  result = await documentManagementTools.handleBatchCreateDocuments(args);
+
+                  break;
+
                 case 'update-document':
 
                   result = await documentManagementTools.handleUpdateDocument(args);

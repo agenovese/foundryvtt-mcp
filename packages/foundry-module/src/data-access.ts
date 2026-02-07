@@ -5772,6 +5772,74 @@ export class FoundryDataAccess {
   }
 
   /**
+   * Batch create multiple documents at once using Foundry's bulk API
+   */
+  async batchCreateDocuments(request: {
+    documentType: 'Actor' | 'Item';
+    documents: Array<Record<string, any>>;
+    folderId?: string;
+  }): Promise<{ created: number; results: Array<{ id: string; name: string }> }> {
+    this.validateFoundryState();
+
+    const permissionCheck = permissionManager.checkWritePermission('createActor', {
+      quantity: request.documents.length,
+    });
+    if (!permissionCheck.allowed) {
+      throw new Error(`Batch creation denied: ${permissionCheck.reason}`);
+    }
+
+    try {
+      const { documentType, documents, folderId } = request;
+
+      // Clean all documents - strip _id and add folder
+      const cleanDocs = documents.map((data: Record<string, any>) => {
+        const clean = { ...data };
+        delete clean._id;
+        if (Array.isArray(clean.items)) {
+          clean.items = clean.items.map((item: any) => {
+            const ci = { ...item };
+            delete ci._id;
+            return ci;
+          });
+        }
+        if (Array.isArray(clean.effects)) {
+          clean.effects = clean.effects.map((effect: any) => {
+            const ce = { ...effect };
+            delete ce._id;
+            return ce;
+          });
+        }
+        if (folderId) {
+          clean.folder = folderId;
+        }
+        return clean;
+      });
+
+      let createdDocs: any[];
+      if (documentType === 'Actor') {
+        createdDocs = await Actor.createDocuments(cleanDocs as any);
+      } else {
+        createdDocs = await Item.createDocuments(cleanDocs as any);
+      }
+
+      const results = (createdDocs || []).map((doc: any) => ({
+        id: doc.id,
+        name: doc.name,
+      }));
+
+      this.auditLog('batchCreateDocuments', {
+        documentType,
+        count: results.length,
+      }, 'success');
+
+      return { created: results.length, results };
+    } catch (error) {
+      this.auditLog('batchCreateDocuments', request, 'failure', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
+    }
+  }
+
+  /**
    * Update an existing document (Actor or Item) with partial data, add/remove embedded items
    */
   async updateDocument(request: {

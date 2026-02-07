@@ -45,6 +45,32 @@ export class DocumentManagementTools {
         },
       },
       {
+        name: 'batch-create-documents',
+        description: 'Batch create multiple Foundry VTT documents at once. Much faster than calling create-document repeatedly. All documents must be the same type (Actor or Item). Documents are created in a single Foundry API call.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            documentType: {
+              type: 'string',
+              enum: ['Actor', 'Item'],
+              description: 'The Foundry document type to create',
+            },
+            documents: {
+              type: 'array',
+              items: {
+                type: 'object',
+              },
+              description: 'Array of document data objects. Each must include "name" and "type" fields.',
+            },
+            folderId: {
+              type: 'string',
+              description: 'Optional folder ID to place all created documents in.',
+            },
+          },
+          required: ['documentType', 'documents'],
+        },
+      },
+      {
         name: 'update-document',
         description: 'Update an existing Foundry VTT document (Actor or Item). Supports partial updates via dot-notation keys (e.g., "system.hp.value": 50), adding embedded items to actors, and removing embedded items from actors. At least one of updates, addItems, or removeItemIds must be provided.',
         inputSchema: {
@@ -248,6 +274,48 @@ export class DocumentManagementTools {
       return response;
     } catch (error) {
       this.errorHandler.handleToolError(error, 'create-document', 'document creation');
+    }
+  }
+
+  async handleBatchCreateDocuments(args: any): Promise<any> {
+    const schema = z.object({
+      documentType: z.enum(['Actor', 'Item']),
+      documents: z.array(z.object({
+        name: z.string().min(1, 'Document name is required'),
+        type: z.string().min(1, 'Document type is required'),
+      }).passthrough()).min(1, 'At least one document is required'),
+      folderId: z.string().optional(),
+    });
+
+    const { documentType, documents, folderId } = schema.parse(args);
+
+    this.logger.info('Batch creating documents', {
+      documentType,
+      count: documents.length,
+      folderId,
+    });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.batchCreateDocuments', {
+        documentType,
+        documents,
+        folderId,
+      });
+
+      this.logger.info('Batch creation complete', {
+        documentType,
+        created: result.created,
+      });
+
+      return {
+        success: true,
+        documentType,
+        created: result.created,
+        message: `Created ${result.created} ${documentType}(s)`,
+        results: result.results,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'batch-create-documents', 'batch document creation');
     }
   }
 
