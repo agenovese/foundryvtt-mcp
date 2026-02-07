@@ -1461,6 +1461,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'list-compendium-entries':
+
+                  result = await compendiumTools.handleListCompendiumEntries(args);
+
+                  break;
+
                 // Scene tools
 
                 case 'get-current-scene':

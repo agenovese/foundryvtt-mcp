@@ -2891,6 +2891,33 @@ export class FoundryDataAccess {
   }
 
   /**
+   * List all entries in a compendium pack
+   */
+  async listCompendiumEntries(packId: string, type?: string) {
+    const pack = game.packs.get(packId);
+    if (!pack) {
+      throw new Error(`Compendium pack not found: ${packId}`);
+    }
+
+    if (!pack.indexed) {
+      await pack.getIndex({});
+    }
+
+    let entries = Array.from(pack.index.values());
+
+    if (type) {
+      entries = entries.filter((e: any) => e.type === type);
+    }
+
+    return entries.map((e: any) => ({
+      id: e._id,
+      name: e.name,
+      type: e.type,
+      img: e.img || '',
+    }));
+  }
+
+  /**
    * Sanitize data to remove sensitive information and make it JSON-safe
    */
   private sanitizeData(data: any): any {

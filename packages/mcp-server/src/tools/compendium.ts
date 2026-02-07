@@ -242,6 +242,24 @@ export class CompendiumTools {
           },
         },
       },
+      {
+        name: 'list-compendium-entries',
+        description: 'List all entries in a compendium pack. Returns entry names, IDs, and types from the pack index. Useful for getting a complete inventory of a pack without searching.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            packId: {
+              type: 'string',
+              description: 'ID of the compendium pack (e.g., "dnd5e.spells", "dnd5e.monsters")',
+            },
+            type: {
+              type: 'string',
+              description: 'Optional filter by entry type (e.g., "spell", "npc", "weapon")',
+            },
+          },
+          required: ['packId'],
+        },
+      },
     ];
   }
 
@@ -571,6 +589,39 @@ export class CompendiumTools {
     } catch (error) {
       this.logger.error('Failed to list compendium packs', error);
       throw new Error(`Failed to list compendium packs: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  async handleListCompendiumEntries(args: any): Promise<any> {
+    const schema = z.object({
+      packId: z.string().min(1),
+      type: z.string().optional(),
+    });
+
+    const { packId, type } = schema.parse(args);
+
+    this.logger.info('Listing compendium entries', { packId, type });
+
+    try {
+      const entries = await this.foundryClient.query('foundry-mcp-bridge.listCompendiumEntries', {
+        packId,
+        type,
+      });
+
+      this.logger.debug('Successfully retrieved compendium entries', {
+        packId,
+        total: entries.length,
+      });
+
+      return {
+        packId,
+        entries,
+        total: entries.length,
+      };
+
+    } catch (error) {
+      this.logger.error('Failed to list compendium entries', error);
+      throw new Error(`Failed to list compendium entries: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

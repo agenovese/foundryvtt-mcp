@@ -36,6 +36,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.searchCompendium`] = this.handleSearchCompendium.bind(this);
     CONFIG.queries[`${modulePrefix}.listCreaturesByCriteria`] = this.handleListCreaturesByCriteria.bind(this);
     CONFIG.queries[`${modulePrefix}.getAvailablePacks`] = this.handleGetAvailablePacks.bind(this);
+    CONFIG.queries[`${modulePrefix}.listCompendiumEntries`] = this.handleListCompendiumEntries.bind(this);
 
     // Scene queries
     CONFIG.queries[`${modulePrefix}.getActiveScene`] = this.handleGetActiveScene.bind(this);
@@ -287,6 +288,23 @@ export class QueryHandlers {
       return await this.dataAccess.getAvailablePacks();
     } catch (error) {
       throw new Error(`Failed to get available packs: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle list compendium entries request
+   */
+  private async handleListCompendiumEntries(data: { packId: string; type?: string }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+      return await this.dataAccess.listCompendiumEntries(data.packId, data.type);
+    } catch (error) {
+      throw new Error(`Failed to list compendium entries: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
