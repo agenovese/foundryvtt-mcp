@@ -108,6 +108,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.listFolders`] = this.handleListFolders.bind(this);
     CONFIG.queries[`${modulePrefix}.deleteFolder`] = this.handleDeleteFolder.bind(this);
     CONFIG.queries[`${modulePrefix}.updateFolder`] = this.handleUpdateFolder.bind(this);
+    CONFIG.queries[`${modulePrefix}.exportFolderToCompendium`] = this.handleExportFolderToCompendium.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -1626,6 +1627,82 @@ export class QueryHandlers {
   /**
    * Handle folder update (rename or reparent)
    */
+  private async handleExportFolderToCompendium(data: {
+    folderId: string;
+    packId: string;
+    recursive?: boolean;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      const folder = (game as any).folders.get(data.folderId);
+      if (!folder) {
+        throw new Error(`Folder not found: ${data.folderId}`);
+      }
+
+      const pack = (game as any).packs.get(data.packId);
+      if (!pack) {
+        throw new Error(`Compendium pack not found: ${data.packId}`);
+      }
+
+      // Collect documents from folder (and optionally subfolders)
+      const docType = folder.type;
+      const collection = docType === 'Actor' ? (game as any).actors : (game as any).items;
+      let documents: any[];
+
+      if (data.recursive !== false) {
+        // Get all descendant folder IDs
+        const folderIds = new Set<string>([data.folderId]);
+        const allFolders = (game as any).folders.filter((f: any) => f.type === docType);
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (const f of allFolders) {
+            if (f.folder?.id && folderIds.has(f.folder.id) && !folderIds.has(f.id)) {
+              folderIds.add(f.id);
+              changed = true;
+            }
+          }
+        }
+        documents = collection.filter((d: any) => d.folder?.id && folderIds.has(d.folder.id));
+      } else {
+        documents = collection.filter((d: any) => d.folder?.id === data.folderId);
+      }
+
+      if (documents.length === 0) {
+        return {
+          success: true,
+          exported: 0,
+          message: `No documents found in folder "${folder.name}"`,
+        };
+      }
+
+      // Export documents to the compendium pack
+      const toCreate = documents.map((d: any) => {
+        const docData = d.toObject();
+        delete docData._id;
+        delete docData.folder;
+        docData._key = undefined;
+        return docData;
+      });
+
+      await (pack as any).documentClass.createDocuments(toCreate, { pack: data.packId });
+
+      return {
+        success: true,
+        exported: toCreate.length,
+        folderName: folder.name,
+        packId: data.packId,
+        message: `Exported ${toCreate.length} documents from "${folder.name}" to compendium "${pack.metadata.label}"`,
+      };
+    } catch (error) {
+      throw new Error(`Failed to export folder to compendium: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
   private async handleUpdateFolder(data: {
     folderId: string;
     name?: string;

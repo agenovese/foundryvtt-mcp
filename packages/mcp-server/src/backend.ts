@@ -1703,6 +1703,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'export-folder-to-compendium':
+
+                  result = await documentManagementTools.handleExportFolderToCompendium(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);

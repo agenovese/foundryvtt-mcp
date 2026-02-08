@@ -202,6 +202,28 @@ export class DocumentManagementTools {
         },
       },
       {
+        name: 'export-folder-to-compendium',
+        description: 'Export all documents from a world folder into a compendium pack. By default recursively includes all subfolders. Use this to populate module compendium packs from world content.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            folderId: {
+              type: 'string',
+              description: 'ID of the world folder to export from',
+            },
+            packId: {
+              type: 'string',
+              description: 'Full compendium pack ID (e.g., "my-module.pack-name")',
+            },
+            recursive: {
+              type: 'boolean',
+              description: 'Whether to include documents from subfolders (default: true)',
+            },
+          },
+          required: ['folderId', 'packId'],
+        },
+      },
+      {
         name: 'update-folder',
         description: 'Update a folder (rename or move to a different parent folder).',
         inputSchema: {
@@ -527,6 +549,36 @@ export class DocumentManagementTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'delete-folder', 'folder deletion');
+    }
+  }
+
+  async handleExportFolderToCompendium(args: any): Promise<any> {
+    const schema = z.object({
+      folderId: z.string().min(1, 'Folder ID is required'),
+      packId: z.string().min(1, 'Pack ID is required'),
+      recursive: z.boolean().optional().default(true),
+    });
+
+    const { folderId, packId, recursive } = schema.parse(args);
+
+    this.logger.info('Exporting folder to compendium', { folderId, packId, recursive });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.exportFolderToCompendium', {
+        folderId,
+        packId,
+        recursive,
+      });
+
+      return {
+        success: true,
+        exported: result.exported,
+        folderName: result.folderName,
+        packId: result.packId,
+        message: result.message,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'export-folder-to-compendium', 'folder export to compendium');
     }
   }
 

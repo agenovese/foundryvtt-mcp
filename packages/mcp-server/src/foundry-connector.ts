@@ -366,7 +366,7 @@ export class FoundryConnector {
       const timeout = setTimeout(() => {
         this.pendingQueries.delete(queryId);
         reject(new Error(`Query timeout: ${method}`));
-      }, 10000); // 10 second timeout
+      }, 120000); // 120 second timeout for large batch operations
 
       this.pendingQueries.set(queryId, { resolve, reject, timeout });
 
