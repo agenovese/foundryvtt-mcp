@@ -36,6 +36,8 @@ import { TokenManipulationTools } from './tools/token-manipulation.js';
 
 import { DocumentManagementTools } from './tools/document-management.js';
 
+import { AdventureImportTools } from './tools/adventure-import.js';
+
 import { DSA5CharacterCreator } from './systems/dsa5/character-creator.js';
 
 const CONTROL_HOST = '127.0.0.1';
@@ -1082,6 +1084,8 @@ async function startBackend(): Promise<void> {
 
   const documentManagementTools = new DocumentManagementTools({ foundryClient, logger });
 
+  const adventureImportTools = new AdventureImportTools({ foundryClient, logger });
+
   // Initialize mapgen-style backend components for map generation
   let mapGenerationJobQueue: any = null;
   let mapGenerationComfyUIClient: any = null;
@@ -1316,6 +1320,8 @@ async function startBackend(): Promise<void> {
     ...mapGenerationTools.getToolDefinitions(),
 
     ...documentManagementTools.getToolDefinitions(),
+
+    ...adventureImportTools.getToolDefinitions(),
 
   ];
 
@@ -1706,6 +1712,32 @@ async function startBackend(): Promise<void> {
                 case 'export-folder-to-compendium':
 
                   result = await documentManagementTools.handleExportFolderToCompendium(args);
+
+                  break;
+
+                // Adventure import tools
+
+                case 'create-journal-entry':
+
+                  result = await adventureImportTools.handleCreateJournalEntry(args);
+
+                  break;
+
+                case 'create-roll-table':
+
+                  result = await adventureImportTools.handleCreateRollTable(args);
+
+                  break;
+
+                case 'upload-file':
+
+                  result = await adventureImportTools.handleUploadFile(args);
+
+                  break;
+
+                case 'create-scene':
+
+                  result = await adventureImportTools.handleCreateScene(args);
 
                   break;
 

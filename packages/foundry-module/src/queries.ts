@@ -110,6 +110,12 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.updateFolder`] = this.handleUpdateFolder.bind(this);
     CONFIG.queries[`${modulePrefix}.exportFolderToCompendium`] = this.handleExportFolderToCompendium.bind(this);
 
+    // Adventure import queries
+    CONFIG.queries[`${modulePrefix}.createJournalEntryMultiPage`] = this.handleCreateJournalEntryMultiPage.bind(this);
+    CONFIG.queries[`${modulePrefix}.createRollTable`] = this.handleCreateRollTable.bind(this);
+    CONFIG.queries[`${modulePrefix}.uploadFile`] = this.handleUploadFile.bind(this);
+    CONFIG.queries[`${modulePrefix}.createScene`] = this.handleCreateScene.bind(this);
+
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
     CONFIG.queries[`${modulePrefix}.update-token`] = this.handleUpdateToken.bind(this);
@@ -1422,11 +1428,14 @@ export class QueryHandlers {
         throw new Error('documents array is required and must not be empty');
       }
 
-      return await this.dataAccess.batchCreateDocuments({
+      const batchArgs: { documentType: 'Actor' | 'Item'; documents: Array<Record<string, any>>; folderId?: string } = {
         documentType: data.documentType,
         documents: data.documents,
-        folderId: data.folderId,
-      });
+      };
+      if (data.folderId) {
+        batchArgs.folderId = data.folderId;
+      }
+      return await this.dataAccess.batchCreateDocuments(batchArgs);
     } catch (error) {
       throw new Error(`Failed to batch create documents: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -1732,6 +1741,452 @@ export class QueryHandlers {
       };
     } catch (error) {
       throw new Error(`Failed to update folder: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // ===== ADVENTURE IMPORT HANDLERS =====
+
+  /**
+   * Handle multi-page journal entry creation
+   */
+  private async handleCreateJournalEntryMultiPage(data: {
+    name: string;
+    pages: Array<{
+      name: string;
+      type: 'text' | 'image';
+      content?: string;
+      src?: string;
+      caption?: string;
+    }>;
+    folder?: string;
+    folderName?: string;
+    ownership?: Record<string, number>;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.name) {
+        throw new Error('name is required');
+      }
+      if (!data.pages || !Array.isArray(data.pages) || data.pages.length === 0) {
+        throw new Error('pages array is required and must not be empty');
+      }
+
+      // Build pages array for Foundry API
+      const pages = data.pages.map((page, index) => {
+        const pageData: any = {
+          name: page.name,
+          type: page.type,
+          sort: (index + 1) * 100000, // Ensure proper ordering
+        };
+
+        if (page.type === 'text') {
+          pageData.text = {
+            content: page.content || '',
+          };
+        } else if (page.type === 'image') {
+          pageData.src = page.src || '';
+          if (page.caption) {
+            pageData.image = { caption: page.caption };
+          }
+        }
+
+        return pageData;
+      });
+
+      // Resolve folder
+      let folderId = data.folder || null;
+      if (!folderId && data.folderName) {
+        // Find or create folder
+        const existing = (game as any).folders.find(
+          (f: any) => f.type === 'JournalEntry' && f.name === data.folderName
+        );
+        if (existing) {
+          folderId = existing.id;
+        } else {
+          const newFolder = await (Folder as any).create({
+            name: data.folderName,
+            type: 'JournalEntry',
+          });
+          folderId = newFolder.id;
+        }
+      }
+
+      const journalData: any = {
+        name: data.name,
+        pages,
+        ownership: data.ownership || { default: 0 },
+      };
+      if (folderId) {
+        journalData.folder = folderId;
+      }
+
+      const journal = await (JournalEntry as any).create(journalData);
+
+      if (!journal) {
+        throw new Error('Failed to create journal entry');
+      }
+
+      return {
+        id: journal.id,
+        name: journal.name,
+        pageCount: journal.pages.size,
+        pageIds: journal.pages.map((p: any) => ({ id: p.id, name: p.name })),
+      };
+    } catch (error) {
+      throw new Error(`Failed to create journal entry: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle roll table creation
+   */
+  private async handleCreateRollTable(data: {
+    name: string;
+    formula: string;
+    description?: string;
+    results: Array<{
+      range: [number, number];
+      text: string;
+      type?: number;
+      documentCollection?: string;
+      documentId?: string;
+      img?: string;
+      weight?: number;
+    }>;
+    folder?: string;
+    folderName?: string;
+    img?: string;
+    replacement?: boolean;
+    displayRoll?: boolean;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.name) {
+        throw new Error('name is required');
+      }
+      if (!data.formula) {
+        throw new Error('formula is required');
+      }
+      if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
+        throw new Error('results array is required and must not be empty');
+      }
+
+      // Build results array for Foundry API
+      const results = data.results.map((r) => {
+        const resultData: any = {
+          range: r.range,
+          text: r.text,
+          type: r.type ?? 0,
+          weight: r.weight ?? 1,
+        };
+
+        if (r.documentCollection) {
+          resultData.documentCollection = r.documentCollection;
+        }
+        if (r.documentId) {
+          resultData.documentId = r.documentId;
+        }
+        if (r.img) {
+          resultData.img = r.img;
+        }
+
+        return resultData;
+      });
+
+      // Resolve folder
+      let folderId = data.folder || null;
+      if (!folderId && data.folderName) {
+        const existing = (game as any).folders.find(
+          (f: any) => f.type === 'RollTable' && f.name === data.folderName
+        );
+        if (existing) {
+          folderId = existing.id;
+        } else {
+          const newFolder = await (Folder as any).create({
+            name: data.folderName,
+            type: 'RollTable',
+          });
+          folderId = newFolder.id;
+        }
+      }
+
+      const tableData: any = {
+        name: data.name,
+        formula: data.formula,
+        description: data.description || '',
+        results,
+        replacement: data.replacement !== false,
+        displayRoll: data.displayRoll !== false,
+      };
+      if (data.img) {
+        tableData.img = data.img;
+      }
+      if (folderId) {
+        tableData.folder = folderId;
+      }
+
+      const table = await (RollTable as any).create(tableData);
+
+      if (!table) {
+        throw new Error('Failed to create roll table');
+      }
+
+      return {
+        id: table.id,
+        name: table.name,
+        formula: table.formula,
+        resultCount: table.results.size,
+      };
+    } catch (error) {
+      throw new Error(`Failed to create roll table: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle file upload to Foundry data directory
+   */
+  private async handleUploadFile(data: {
+    filename: string;
+    base64data: string;
+    targetPath: string;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      if (!data.filename || typeof data.filename !== 'string') {
+        throw new Error('filename is required and must be a string');
+      }
+      if (!data.base64data || typeof data.base64data !== 'string') {
+        throw new Error('base64data is required and must be a string');
+      }
+      if (!data.targetPath || typeof data.targetPath !== 'string') {
+        throw new Error('targetPath is required and must be a string');
+      }
+
+      // Sanitize filename — allow dots, hyphens, underscores, alphanumeric, and spaces
+      const safeFilename = data.filename.replace(/[^a-zA-Z0-9_\-\.\s]/g, '_');
+
+      // Determine MIME type from extension
+      const ext = safeFilename.split('.').pop()?.toLowerCase() || '';
+      const mimeTypes: Record<string, string> = {
+        png: 'image/png',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        webp: 'image/webp',
+        svg: 'image/svg+xml',
+        gif: 'image/gif',
+        mp3: 'audio/mpeg',
+        wav: 'audio/wav',
+        ogg: 'audio/ogg',
+        flac: 'audio/flac',
+        m4a: 'audio/mp4',
+        mp4: 'video/mp4',
+        webm: 'video/webm',
+        pdf: 'application/pdf',
+      };
+
+      const mimeType = mimeTypes[ext];
+      if (!mimeType) {
+        throw new Error(`Unsupported file extension: .${ext}. Supported: ${Object.keys(mimeTypes).join(', ')}`);
+      }
+
+      // Convert base64 to Blob
+      const byteCharacters = atob(data.base64data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: mimeType });
+      const file = new File([blob], safeFilename, { type: mimeType });
+
+      // Ensure target directory exists
+      const targetPath = data.targetPath.replace(/^\/+|\/+$/g, ''); // Trim slashes
+      const FilePickerAPI = (globalThis as any).foundry?.applications?.apps?.FilePicker?.implementation || (globalThis as any).FilePicker;
+
+      // Create directory path recursively
+      const parts = targetPath.split('/');
+      let currentPath = '';
+      for (const part of parts) {
+        currentPath = currentPath ? `${currentPath}/${part}` : part;
+        try {
+          await FilePickerAPI.createDirectory('data', currentPath, { bucket: null });
+        } catch (dirError: any) {
+          // Directory already exists — that's fine
+          if (!dirError.message?.includes('EEXIST') && !dirError.message?.includes('already exists')) {
+            console.warn(`[${MODULE_ID}] Directory creation warning for "${currentPath}":`, dirError.message);
+          }
+        }
+      }
+
+      // Upload the file
+      const response = await FilePickerAPI.upload(
+        'data',
+        targetPath,
+        file,
+        {},
+        { notify: false }
+      );
+
+      return {
+        success: true,
+        path: response.path,
+        filename: safeFilename,
+      };
+    } catch (error: any) {
+      throw new Error(`Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle scene creation from background image
+   */
+  private async handleCreateScene(data: {
+    name: string;
+    backgroundImage: string;
+    gridSize?: number;
+    gridType?: number;
+    width?: number;
+    height?: number;
+    padding?: number;
+    globalLight?: boolean;
+    globalLightThreshold?: number | null;
+    initialViewPosition?: { x: number; y: number; scale?: number };
+    folder?: string;
+    folderName?: string;
+    gridUnits?: string;
+    gridDistance?: number;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.name) {
+        throw new Error('name is required');
+      }
+      if (!data.backgroundImage) {
+        throw new Error('backgroundImage is required');
+      }
+
+      // If width/height not provided, try to load the image to get dimensions
+      let width = data.width;
+      let height = data.height;
+
+      if (!width || !height) {
+        try {
+          const img = new Image();
+          await new Promise<void>((resolve, reject) => {
+            img.onload = () => resolve();
+            img.onerror = () => reject(new Error('Failed to load background image'));
+            img.src = data.backgroundImage;
+          });
+          width = width || img.naturalWidth;
+          height = height || img.naturalHeight;
+        } catch (imgError) {
+          console.warn(`[${MODULE_ID}] Could not auto-detect image dimensions, using defaults`);
+          width = width || 4000;
+          height = height || 3000;
+        }
+      }
+
+      // Resolve folder
+      let folderId = data.folder || null;
+      if (!folderId && data.folderName) {
+        const existing = (game as any).folders.find(
+          (f: any) => f.type === 'Scene' && f.name === data.folderName
+        );
+        if (existing) {
+          folderId = existing.id;
+        } else {
+          const newFolder = await (Folder as any).create({
+            name: data.folderName,
+            type: 'Scene',
+          });
+          folderId = newFolder.id;
+        }
+      }
+
+      const gridSize = data.gridSize || 100;
+      const sceneData: any = {
+        name: data.name,
+        background: {
+          src: data.backgroundImage,
+        },
+        width,
+        height,
+        padding: data.padding ?? 0.25,
+        grid: {
+          size: gridSize,
+          type: data.gridType ?? 1,
+          distance: data.gridDistance ?? 5,
+          units: data.gridUnits || 'ft',
+        },
+        environment: {
+          globalLight: {
+            enabled: data.globalLight !== false,
+          },
+        },
+      };
+
+      if (data.globalLightThreshold !== undefined && data.globalLightThreshold !== null) {
+        sceneData.environment.globalLight.darkness = {
+          max: data.globalLightThreshold,
+        };
+      }
+
+      if (data.initialViewPosition) {
+        sceneData.initial = {
+          x: data.initialViewPosition.x,
+          y: data.initialViewPosition.y,
+          scale: data.initialViewPosition.scale || 1,
+        };
+      }
+
+      if (folderId) {
+        sceneData.folder = folderId;
+      }
+
+      const scene = await (Scene as any).create(sceneData);
+
+      if (!scene) {
+        throw new Error('Failed to create scene');
+      }
+
+      // Generate thumbnail
+      try {
+        await scene.createThumbnail();
+      } catch (thumbError) {
+        console.warn(`[${MODULE_ID}] Could not generate scene thumbnail:`, thumbError);
+      }
+
+      return {
+        id: scene.id,
+        name: scene.name,
+        width: scene.width,
+        height: scene.height,
+        gridSize: scene.grid?.size || gridSize,
+      };
+    } catch (error) {
+      throw new Error(`Failed to create scene: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
