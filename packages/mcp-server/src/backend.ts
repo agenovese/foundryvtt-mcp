@@ -1741,6 +1741,24 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'place-notes':
+
+                  result = await adventureImportTools.handlePlaceNotes(args);
+
+                  break;
+
+                case 'create-walls':
+
+                  result = await adventureImportTools.handleCreateWalls(args);
+
+                  break;
+
+                case 'create-lights':
+
+                  result = await adventureImportTools.handleCreateLights(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);

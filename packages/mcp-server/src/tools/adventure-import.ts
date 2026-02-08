@@ -252,6 +252,131 @@ export class AdventureImportTools {
           required: ['name', 'backgroundImage'],
         },
       },
+      {
+        name: 'place-notes',
+        description: 'Place map pin notes on a scene that link to journal pages. Creates clickable pins at specified coordinates that open the corresponding journal entry page when clicked.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sceneId: {
+              type: 'string',
+              description: 'ID of the scene to place notes on',
+            },
+            notes: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  x: { type: 'number', description: 'X coordinate in pixels' },
+                  y: { type: 'number', description: 'Y coordinate in pixels' },
+                  entryId: { type: 'string', description: 'Journal entry ID to link to' },
+                  pageId: { type: 'string', description: 'Specific journal page ID (optional)' },
+                  text: { type: 'string', description: 'Label text displayed on the map pin' },
+                  iconSize: { type: 'number', description: 'Icon size in pixels (default: 40)' },
+                  iconTint: { type: 'string', description: 'Hex color tint for the icon (optional)' },
+                },
+                required: ['x', 'y', 'entryId', 'text'],
+              },
+              description: 'Array of map pin notes to place',
+            },
+          },
+          required: ['sceneId', 'notes'],
+        },
+      },
+      {
+        name: 'create-walls',
+        description: 'Add wall segments to a scene. Walls block movement and/or vision. Supports doors (normal and secret) with open/closed/locked states. Coordinates are in pixels relative to the scene canvas.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sceneId: {
+              type: 'string',
+              description: 'ID of the scene to add walls to',
+            },
+            walls: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  c: {
+                    type: 'array',
+                    items: { type: 'number' },
+                    description: 'Wall coordinates as [x1, y1, x2, y2] in pixels',
+                  },
+                  move: {
+                    type: 'number',
+                    description: 'Movement restriction: 0=none, 1=normal (default: 1)',
+                  },
+                  sense: {
+                    type: 'number',
+                    description: 'Sensory restriction: 0=none, 1=normal, 2=limited (default: 1)',
+                  },
+                  door: {
+                    type: 'number',
+                    description: 'Door type: 0=none, 1=door, 2=secret door (default: 0)',
+                  },
+                  ds: {
+                    type: 'number',
+                    description: 'Door state: 0=closed, 1=open, 2=locked (default: 0)',
+                  },
+                  dir: {
+                    type: 'number',
+                    description: 'Wall direction: 0=both sides, 1=left, 2=right (default: 0)',
+                  },
+                },
+                required: ['c'],
+              },
+              description: 'Array of wall segments to create',
+            },
+          },
+          required: ['sceneId', 'walls'],
+        },
+      },
+      {
+        name: 'create-lights',
+        description: 'Add ambient light sources to a scene. Lights illuminate areas with configurable bright/dim radius, color, angle, and animation effects.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sceneId: {
+              type: 'string',
+              description: 'ID of the scene to add lights to',
+            },
+            lights: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  x: { type: 'number', description: 'X coordinate in pixels' },
+                  y: { type: 'number', description: 'Y coordinate in pixels' },
+                  config: {
+                    type: 'object',
+                    properties: {
+                      dim: { type: 'number', description: 'Dim light radius in grid units (default: 10)' },
+                      bright: { type: 'number', description: 'Bright light radius in grid units (default: 5)' },
+                      color: { type: 'string', description: 'Light color as hex string (default: "#ff9329")' },
+                      angle: { type: 'number', description: 'Emission angle in degrees (default: 360)' },
+                      animation: {
+                        type: 'object',
+                        properties: {
+                          type: { type: 'string', description: 'Animation type (e.g., "torch", "pulse", "chroma", "flame")' },
+                          speed: { type: 'number', description: 'Animation speed 1-10 (default: 5)' },
+                          intensity: { type: 'number', description: 'Animation intensity 1-10 (default: 5)' },
+                        },
+                        description: 'Optional light animation settings',
+                      },
+                    },
+                    description: 'Light configuration',
+                  },
+                },
+                required: ['x', 'y'],
+              },
+              description: 'Array of ambient lights to create',
+            },
+          },
+          required: ['sceneId', 'lights'],
+        },
+      },
     ];
   }
 
@@ -462,6 +587,149 @@ export class AdventureImportTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'create-scene', 'scene creation');
+    }
+  }
+
+  async handlePlaceNotes(args: any): Promise<any> {
+    const noteSchema = z.object({
+      x: z.number(),
+      y: z.number(),
+      entryId: z.string().min(1),
+      pageId: z.string().optional(),
+      text: z.string(),
+      iconSize: z.number().optional().default(40),
+      iconTint: z.string().optional(),
+    });
+
+    const schema = z.object({
+      sceneId: z.string().min(1, 'Scene ID is required'),
+      notes: z.array(noteSchema).min(1, 'At least one note is required'),
+    });
+
+    const { sceneId, notes } = schema.parse(args);
+
+    this.logger.info('Placing notes on scene', {
+      sceneId,
+      noteCount: notes.length,
+    });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.placeNotes', {
+        sceneId,
+        notes,
+      });
+
+      this.logger.info('Notes placed', {
+        sceneId,
+        count: result.count,
+      });
+
+      return {
+        success: true,
+        sceneId,
+        count: result.count,
+        noteIds: result.noteIds,
+        message: `Placed ${result.count} notes on scene (ID: ${sceneId})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'place-notes', 'note placement');
+    }
+  }
+
+  async handleCreateWalls(args: any): Promise<any> {
+    const wallSchema = z.object({
+      c: z.array(z.number()).length(4),
+      move: z.number().optional().default(1),
+      sense: z.number().optional().default(1),
+      door: z.number().optional().default(0),
+      ds: z.number().optional().default(0),
+      dir: z.number().optional().default(0),
+    });
+
+    const schema = z.object({
+      sceneId: z.string().min(1, 'Scene ID is required'),
+      walls: z.array(wallSchema).min(1, 'At least one wall is required'),
+    });
+
+    const { sceneId, walls } = schema.parse(args);
+
+    this.logger.info('Creating walls on scene', {
+      sceneId,
+      wallCount: walls.length,
+    });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.createWalls', {
+        sceneId,
+        walls,
+      });
+
+      this.logger.info('Walls created', {
+        sceneId,
+        count: result.count,
+      });
+
+      return {
+        success: true,
+        sceneId,
+        count: result.count,
+        wallIds: result.wallIds,
+        message: `Created ${result.count} walls on scene (ID: ${sceneId})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'create-walls', 'wall creation');
+    }
+  }
+
+  async handleCreateLights(args: any): Promise<any> {
+    const lightSchema = z.object({
+      x: z.number(),
+      y: z.number(),
+      config: z.object({
+        dim: z.number().optional().default(10),
+        bright: z.number().optional().default(5),
+        color: z.string().optional().default('#ff9329'),
+        angle: z.number().optional().default(360),
+        animation: z.object({
+          type: z.string(),
+          speed: z.number().optional().default(5),
+          intensity: z.number().optional().default(5),
+        }).optional(),
+      }).optional(),
+    });
+
+    const schema = z.object({
+      sceneId: z.string().min(1, 'Scene ID is required'),
+      lights: z.array(lightSchema).min(1, 'At least one light is required'),
+    });
+
+    const { sceneId, lights } = schema.parse(args);
+
+    this.logger.info('Creating lights on scene', {
+      sceneId,
+      lightCount: lights.length,
+    });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.createLights', {
+        sceneId,
+        lights,
+      });
+
+      this.logger.info('Lights created', {
+        sceneId,
+        count: result.count,
+      });
+
+      return {
+        success: true,
+        sceneId,
+        count: result.count,
+        lightIds: result.lightIds,
+        message: `Created ${result.count} lights on scene (ID: ${sceneId})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'create-lights', 'light creation');
     }
   }
 }

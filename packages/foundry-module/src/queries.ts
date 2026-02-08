@@ -115,6 +115,9 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.createRollTable`] = this.handleCreateRollTable.bind(this);
     CONFIG.queries[`${modulePrefix}.uploadFile`] = this.handleUploadFile.bind(this);
     CONFIG.queries[`${modulePrefix}.createScene`] = this.handleCreateScene.bind(this);
+    CONFIG.queries[`${modulePrefix}.placeNotes`] = this.handlePlaceNotes.bind(this);
+    CONFIG.queries[`${modulePrefix}.createWalls`] = this.handleCreateWalls.bind(this);
+    CONFIG.queries[`${modulePrefix}.createLights`] = this.handleCreateLights.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -2187,6 +2190,203 @@ export class QueryHandlers {
       };
     } catch (error) {
       throw new Error(`Failed to create scene: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle placing map pin notes on a scene
+   */
+  private async handlePlaceNotes(data: {
+    sceneId: string;
+    notes: Array<{
+      x: number;
+      y: number;
+      entryId: string;
+      pageId?: string;
+      text: string;
+      iconSize?: number;
+      iconTint?: string;
+    }>;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.sceneId) {
+        throw new Error('sceneId is required');
+      }
+      if (!data.notes || !Array.isArray(data.notes) || data.notes.length === 0) {
+        throw new Error('notes array is required and must not be empty');
+      }
+
+      const scene = (game as any).scenes.get(data.sceneId);
+      if (!scene) {
+        throw new Error(`Scene not found: ${data.sceneId}`);
+      }
+
+      const noteDocuments = data.notes.map((note) => {
+        const noteData: any = {
+          x: note.x,
+          y: note.y,
+          entryId: note.entryId,
+          text: note.text,
+          iconSize: note.iconSize || 40,
+          textAnchor: 1, // TEXTANCHOR_TYPES.TOP
+        };
+
+        if (note.pageId) {
+          noteData.pageId = note.pageId;
+        }
+        if (note.iconTint) {
+          noteData.iconTint = note.iconTint;
+        }
+
+        return noteData;
+      });
+
+      const created = await scene.createEmbeddedDocuments('Note', noteDocuments);
+
+      return {
+        count: created.length,
+        noteIds: created.map((n: any) => n.id),
+      };
+    } catch (error) {
+      throw new Error(`Failed to place notes: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle creating wall segments on a scene
+   */
+  private async handleCreateWalls(data: {
+    sceneId: string;
+    walls: Array<{
+      c: [number, number, number, number];
+      move?: number;
+      sense?: number;
+      door?: number;
+      ds?: number;
+      dir?: number;
+    }>;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.sceneId) {
+        throw new Error('sceneId is required');
+      }
+      if (!data.walls || !Array.isArray(data.walls) || data.walls.length === 0) {
+        throw new Error('walls array is required and must not be empty');
+      }
+
+      const scene = (game as any).scenes.get(data.sceneId);
+      if (!scene) {
+        throw new Error(`Scene not found: ${data.sceneId}`);
+      }
+
+      const wallDocuments = data.walls.map((wall) => ({
+        c: wall.c,
+        move: wall.move ?? 1,    // CONST.WALL_MOVEMENT_TYPES.NORMAL
+        sense: wall.sense ?? 1,  // CONST.WALL_SENSE_TYPES.NORMAL
+        door: wall.door ?? 0,    // CONST.WALL_DOOR_TYPES.NONE
+        ds: wall.ds ?? 0,        // CONST.WALL_DOOR_STATES.CLOSED
+        dir: wall.dir ?? 0,      // CONST.WALL_DIRECTIONS.BOTH
+      }));
+
+      const created = await scene.createEmbeddedDocuments('Wall', wallDocuments);
+
+      return {
+        count: created.length,
+        wallIds: created.map((w: any) => w.id),
+      };
+    } catch (error) {
+      throw new Error(`Failed to create walls: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle creating ambient lights on a scene
+   */
+  private async handleCreateLights(data: {
+    sceneId: string;
+    lights: Array<{
+      x: number;
+      y: number;
+      config?: {
+        dim?: number;
+        bright?: number;
+        color?: string;
+        angle?: number;
+        animation?: {
+          type: string;
+          speed?: number;
+          intensity?: number;
+        };
+      };
+    }>;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.sceneId) {
+        throw new Error('sceneId is required');
+      }
+      if (!data.lights || !Array.isArray(data.lights) || data.lights.length === 0) {
+        throw new Error('lights array is required and must not be empty');
+      }
+
+      const scene = (game as any).scenes.get(data.sceneId);
+      if (!scene) {
+        throw new Error(`Scene not found: ${data.sceneId}`);
+      }
+
+      const lightDocuments = data.lights.map((light) => {
+        const config = light.config || {};
+        const lightData: any = {
+          x: light.x,
+          y: light.y,
+          config: {
+            dim: config.dim ?? 10,
+            bright: config.bright ?? 5,
+            color: config.color || '#ff9329',
+            angle: config.angle ?? 360,
+            alpha: 0.5,
+          },
+        };
+
+        if (config.animation) {
+          lightData.config.animation = {
+            type: config.animation.type,
+            speed: config.animation.speed ?? 5,
+            intensity: config.animation.intensity ?? 5,
+          };
+        }
+
+        return lightData;
+      });
+
+      const created = await scene.createEmbeddedDocuments('AmbientLight', lightDocuments);
+
+      return {
+        count: created.length,
+        lightIds: created.map((l: any) => l.id),
+      };
+    } catch (error) {
+      throw new Error(`Failed to create lights: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
