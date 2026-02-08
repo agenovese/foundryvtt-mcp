@@ -2295,11 +2295,11 @@ export class QueryHandlers {
 
       const wallDocuments = data.walls.map((wall) => ({
         c: wall.c,
-        move: wall.move ?? 1,    // CONST.WALL_MOVEMENT_TYPES.NORMAL
-        sense: wall.sense ?? 1,  // CONST.WALL_SENSE_TYPES.NORMAL
-        door: wall.door ?? 0,    // CONST.WALL_DOOR_TYPES.NONE
-        ds: wall.ds ?? 0,        // CONST.WALL_DOOR_STATES.CLOSED
-        dir: wall.dir ?? 0,      // CONST.WALL_DIRECTIONS.BOTH
+        move: wall.move ?? 20,    // 20 = NORMAL (v13 schema)
+        sight: wall.sense ?? 20,  // 20 = NORMAL (v13: field renamed from 'sense' to 'sight')
+        door: wall.door ?? 0,     // 0 = NONE
+        ds: wall.ds ?? 0,         // 0 = CLOSED
+        dir: wall.dir ?? 0,       // 0 = BOTH
       }));
 
       const created = await scene.createEmbeddedDocuments('Wall', wallDocuments);

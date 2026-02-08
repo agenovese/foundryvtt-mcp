@@ -305,11 +305,11 @@ export class AdventureImportTools {
                   },
                   move: {
                     type: 'number',
-                    description: 'Movement restriction: 0=none, 1=normal (default: 1)',
+                    description: 'Movement restriction: 0=none, 20=normal (default: 20)',
                   },
                   sense: {
                     type: 'number',
-                    description: 'Sensory restriction: 0=none, 1=normal, 2=limited (default: 1)',
+                    description: 'Sensory restriction: 0=none, 10=limited, 20=normal, 30=proximity, 40=distance (default: 20)',
                   },
                   door: {
                     type: 'number',
@@ -639,8 +639,8 @@ export class AdventureImportTools {
   async handleCreateWalls(args: any): Promise<any> {
     const wallSchema = z.object({
       c: z.array(z.number()).length(4),
-      move: z.number().optional().default(1),
-      sense: z.number().optional().default(1),
+      move: z.number().optional().default(20),
+      sense: z.number().optional().default(20),
       door: z.number().optional().default(0),
       ds: z.number().optional().default(0),
       dir: z.number().optional().default(0),
