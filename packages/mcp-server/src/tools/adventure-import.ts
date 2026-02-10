@@ -333,6 +333,38 @@ export class AdventureImportTools {
         },
       },
       {
+        name: 'create-tokens',
+        description: 'Create tokens on a scene from existing world actors. Tokens are unlinked by default, allowing multiple independent tokens from a single actor (each with their own HP, conditions, etc.). Use this after creating actors to place multiple tokens referencing the same stat block.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            sceneId: {
+              type: 'string',
+              description: 'ID of the scene to place tokens on',
+            },
+            tokens: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  actorId: { type: 'string', description: 'World actor ID to create the token from' },
+                  x: { type: 'number', description: 'X coordinate in pixels' },
+                  y: { type: 'number', description: 'Y coordinate in pixels' },
+                  name: { type: 'string', description: 'Override token display name (optional, defaults to actor prototype token name)' },
+                  hidden: { type: 'boolean', description: 'Whether the token is hidden from players (default: false)' },
+                  elevation: { type: 'number', description: 'Token elevation in distance units (default: 0)' },
+                  disposition: { type: 'number', description: 'Token disposition: -1 (hostile), 0 (neutral), 1 (friendly). Defaults to actor prototype.' },
+                  actorLink: { type: 'boolean', description: 'Whether to link token data to the actor (default: false = unlinked)' },
+                },
+                required: ['actorId', 'x', 'y'],
+              },
+              description: 'Array of tokens to create',
+            },
+          },
+          required: ['sceneId', 'tokens'],
+        },
+      },
+      {
         name: 'create-lights',
         description: 'Add ambient light sources to a scene. Lights illuminate areas with configurable bright/dim radius, color, angle, and animation effects.',
         inputSchema: {
@@ -678,6 +710,53 @@ export class AdventureImportTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'create-walls', 'wall creation');
+    }
+  }
+
+  async handleCreateTokens(args: any): Promise<any> {
+    const tokenSchema = z.object({
+      actorId: z.string().min(1),
+      x: z.number(),
+      y: z.number(),
+      name: z.string().optional(),
+      hidden: z.boolean().optional().default(false),
+      elevation: z.number().optional().default(0),
+      disposition: z.number().optional(),
+      actorLink: z.boolean().optional().default(false),
+    });
+
+    const schema = z.object({
+      sceneId: z.string().min(1, 'Scene ID is required'),
+      tokens: z.array(tokenSchema).min(1, 'At least one token is required'),
+    });
+
+    const { sceneId, tokens } = schema.parse(args);
+
+    this.logger.info('Creating tokens on scene', {
+      sceneId,
+      tokenCount: tokens.length,
+    });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.createTokens', {
+        sceneId,
+        tokens,
+      });
+
+      this.logger.info('Tokens created', {
+        sceneId,
+        count: result.count,
+      });
+
+      return {
+        success: true,
+        sceneId,
+        count: result.count,
+        tokenIds: result.tokenIds,
+        message: `Created ${result.count} tokens on scene (ID: ${sceneId})`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'create-tokens', 'token creation');
     }
   }
 

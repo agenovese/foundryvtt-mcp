@@ -1753,6 +1753,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'create-tokens':
+
+                  result = await adventureImportTools.handleCreateTokens(args);
+
+                  break;
+
                 case 'create-lights':
 
                   result = await adventureImportTools.handleCreateLights(args);

@@ -118,6 +118,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.placeNotes`] = this.handlePlaceNotes.bind(this);
     CONFIG.queries[`${modulePrefix}.createWalls`] = this.handleCreateWalls.bind(this);
     CONFIG.queries[`${modulePrefix}.createLights`] = this.handleCreateLights.bind(this);
+    CONFIG.queries[`${modulePrefix}.createTokens`] = this.handleCreateTokens.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -2387,6 +2388,80 @@ export class QueryHandlers {
       };
     } catch (error) {
       throw new Error(`Failed to create lights: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle creating tokens on a scene from existing world actors
+   */
+  private async handleCreateTokens(data: {
+    sceneId: string;
+    tokens: Array<{
+      actorId: string;
+      x: number;
+      y: number;
+      name?: string;
+      hidden?: boolean;
+      elevation?: number;
+      disposition?: number;
+      actorLink?: boolean;
+    }>;
+  }): Promise<any> {
+    try {
+      const gmCheck = this.validateGMAccess();
+      if (!gmCheck.allowed) {
+        return { error: 'Access denied', success: false };
+      }
+
+      this.dataAccess.validateFoundryState();
+
+      if (!data.sceneId) {
+        throw new Error('sceneId is required');
+      }
+      if (!data.tokens || !Array.isArray(data.tokens) || data.tokens.length === 0) {
+        throw new Error('tokens array is required and must not be empty');
+      }
+
+      const scene = (game as any).scenes.get(data.sceneId);
+      if (!scene) {
+        throw new Error(`Scene not found: ${data.sceneId}`);
+      }
+
+      const tokenDocuments = data.tokens.map((token) => {
+        const actor = (game as any).actors.get(token.actorId);
+        if (!actor) {
+          throw new Error(`Actor not found: ${token.actorId}`);
+        }
+
+        const proto = actor.prototypeToken;
+        const tokenData: any = {
+          actorId: token.actorId,
+          name: token.name ?? proto.name,
+          x: token.x,
+          y: token.y,
+          hidden: token.hidden ?? false,
+          elevation: token.elevation ?? 0,
+          disposition: token.disposition ?? proto.disposition,
+          actorLink: token.actorLink ?? false,
+          texture: { src: proto.texture.src },
+          width: proto.width,
+          height: proto.height,
+          sight: proto.sight ? { ...proto.sight } : undefined,
+          bar1: proto.bar1 ? { ...proto.bar1 } : undefined,
+          bar2: proto.bar2 ? { ...proto.bar2 } : undefined,
+        };
+
+        return tokenData;
+      });
+
+      const created = await scene.createEmbeddedDocuments('Token', tokenDocuments);
+
+      return {
+        count: created.length,
+        tokenIds: created.map((t: any) => t.id),
+      };
+    } catch (error) {
+      throw new Error(`Failed to create tokens: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
