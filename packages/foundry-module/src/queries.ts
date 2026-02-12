@@ -119,6 +119,7 @@ export class QueryHandlers {
     CONFIG.queries[`${modulePrefix}.createWalls`] = this.handleCreateWalls.bind(this);
     CONFIG.queries[`${modulePrefix}.createLights`] = this.handleCreateLights.bind(this);
     CONFIG.queries[`${modulePrefix}.createTokens`] = this.handleCreateTokens.bind(this);
+    CONFIG.queries[`${modulePrefix}.updateCompendiumEntry`] = this.handleUpdateCompendiumEntry.bind(this);
 
     // Phase 7: Token manipulation queries
     CONFIG.queries[`${modulePrefix}.move-token`] = this.handleMoveToken.bind(this);
@@ -2462,6 +2463,45 @@ export class QueryHandlers {
       };
     } catch (error) {
       throw new Error(`Failed to create tokens: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Handle updating an item within a compendium pack
+   */
+  private async handleUpdateCompendiumEntry(data: {
+    packId: string;
+    itemId: string;
+    updates: Record<string, any>;
+  }): Promise<any> {
+    if (!(game as any).user?.isGM) {
+      throw new Error('Only GM can update compendium entries');
+    }
+
+    const pack = (game as any).packs.get(data.packId);
+    if (!pack) {
+      throw new Error(`Compendium pack not found: ${data.packId}`);
+    }
+
+    if (pack.locked) {
+      throw new Error(`Compendium pack is locked: ${data.packId}. Unlock it in Foundry first.`);
+    }
+
+    try {
+      const doc = await pack.getDocument(data.itemId);
+      if (!doc) {
+        throw new Error(`Document not found: ${data.itemId} in ${data.packId}`);
+      }
+
+      await doc.update(data.updates);
+
+      return {
+        success: true,
+        id: data.itemId,
+        name: (doc as any).name,
+      };
+    } catch (error) {
+      throw new Error(`Failed to update compendium entry: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

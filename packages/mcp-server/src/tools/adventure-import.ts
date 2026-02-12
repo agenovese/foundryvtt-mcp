@@ -409,6 +409,28 @@ export class AdventureImportTools {
           required: ['sceneId', 'lights'],
         },
       },
+      {
+        name: 'update-compendium-entry',
+        description: 'Update an item within a compendium pack. Supports partial updates via dot-notation keys (e.g., "system.advancement": [...]). The pack must be unlocked before updating.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            packId: {
+              type: 'string',
+              description: 'Compendium pack ID (e.g., "custom-dandd-content.players-handbook")',
+            },
+            itemId: {
+              type: 'string',
+              description: 'ID of the item to update within the pack',
+            },
+            updates: {
+              type: 'object',
+              description: 'Partial JSON to merge into the document. Supports dot-notation keys like "system.advancement": [...]',
+            },
+          },
+          required: ['packId', 'itemId', 'updates'],
+        },
+      },
     ];
   }
 
@@ -809,6 +831,42 @@ export class AdventureImportTools {
       };
     } catch (error) {
       this.errorHandler.handleToolError(error, 'create-lights', 'light creation');
+    }
+  }
+
+  async handleUpdateCompendiumEntry(args: any): Promise<any> {
+    const schema = z.object({
+      packId: z.string().min(1, 'Pack ID is required'),
+      itemId: z.string().min(1, 'Item ID is required'),
+      updates: z.record(z.any()),
+    });
+
+    const { packId, itemId, updates } = schema.parse(args);
+
+    this.logger.info('Updating compendium entry', { packId, itemId });
+
+    try {
+      const result = await this.foundryClient.query('foundry-mcp-bridge.updateCompendiumEntry', {
+        packId,
+        itemId,
+        updates,
+      });
+
+      this.logger.info('Compendium entry updated', {
+        packId,
+        itemId,
+        name: result.name,
+      });
+
+      return {
+        success: true,
+        packId,
+        itemId,
+        name: result.name,
+        message: `Updated "${result.name}" in ${packId}`,
+      };
+    } catch (error) {
+      this.errorHandler.handleToolError(error, 'update-compendium-entry', 'compendium entry update');
     }
   }
 }

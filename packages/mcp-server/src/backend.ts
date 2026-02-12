@@ -1765,6 +1765,12 @@ async function startBackend(): Promise<void> {
 
                   break;
 
+                case 'update-compendium-entry':
+
+                  result = await adventureImportTools.handleUpdateCompendiumEntry(args);
+
+                  break;
+
                 default:
 
                   throw new Error(`Unknown tool: ${name}`);
