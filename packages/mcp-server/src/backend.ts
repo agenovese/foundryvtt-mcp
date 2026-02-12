@@ -1358,8 +1358,35 @@ async function startBackend(): Promise<void> {
   };
 
   // Control channel (TCP JSON-lines)
+  // Track connected clients so we can auto-exit when all disconnect
+  // This prevents orphaned backend processes when the parent index.js dies
+  const connectedClients = new Set<net.Socket>();
+  let orphanExitTimer: ReturnType<typeof setTimeout> | null = null;
+  const ORPHAN_EXIT_DELAY_MS = 15_000; // Exit after 15s with no clients
 
   const server = net.createServer((socket) => {
+    connectedClients.add(socket);
+    if (orphanExitTimer) {
+      clearTimeout(orphanExitTimer);
+      orphanExitTimer = null;
+    }
+    logger.info('TCP client connected', { clients: connectedClients.size });
+
+    const removeClient = () => {
+      connectedClients.delete(socket);
+      logger.info('TCP client disconnected', { clients: connectedClients.size });
+      if (connectedClients.size === 0) {
+        logger.info(`No TCP clients remaining, will exit in ${ORPHAN_EXIT_DELAY_MS / 1000}s if none reconnect`);
+        orphanExitTimer = setTimeout(() => {
+          logger.info('No TCP clients reconnected, shutting down to avoid orphaned backend');
+          foundryClient.disconnect();
+          releaseLock();
+          process.exit(0);
+        }, ORPHAN_EXIT_DELAY_MS);
+      }
+    };
+    socket.on('close', removeClient);
+    socket.on('error', () => removeClient());
 
     socket.setEncoding('utf8');
 
