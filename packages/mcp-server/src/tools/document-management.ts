@@ -219,6 +219,10 @@ export class DocumentManagementTools {
               type: 'boolean',
               description: 'Whether to include documents from subfolders (default: true)',
             },
+            clearFirst: {
+              type: 'boolean',
+              description: 'Delete all existing entries from the pack before exporting (default: false). Use to prevent duplicates on reimport.',
+            },
           },
           required: ['folderId', 'packId'],
         },
@@ -557,17 +561,19 @@ export class DocumentManagementTools {
       folderId: z.string().min(1, 'Folder ID is required'),
       packId: z.string().min(1, 'Pack ID is required'),
       recursive: z.boolean().optional().default(true),
+      clearFirst: z.boolean().optional().default(false),
     });
 
-    const { folderId, packId, recursive } = schema.parse(args);
+    const { folderId, packId, recursive, clearFirst } = schema.parse(args);
 
-    this.logger.info('Exporting folder to compendium', { folderId, packId, recursive });
+    this.logger.info('Exporting folder to compendium', { folderId, packId, recursive, clearFirst });
 
     try {
       const result = await this.foundryClient.query('foundry-mcp-bridge.exportFolderToCompendium', {
         folderId,
         packId,
         recursive,
+        clearFirst,
       });
 
       return {

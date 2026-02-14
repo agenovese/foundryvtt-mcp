@@ -1645,6 +1645,7 @@ export class QueryHandlers {
     folderId: string;
     packId: string;
     recursive?: boolean;
+    clearFirst?: boolean;
   }): Promise<any> {
     try {
       const gmCheck = this.validateGMAccess();
@@ -1709,14 +1710,25 @@ export class QueryHandlers {
         return docData;
       });
 
+      // Optionally clear existing pack contents before exporting
+      let cleared = 0;
+      if (data.clearFirst) {
+        const existingIds = (await pack.getIndex()).map((e: any) => e._id);
+        if (existingIds.length > 0) {
+          await (pack as any).documentClass.deleteDocuments(existingIds, { pack: data.packId });
+          cleared = existingIds.length;
+        }
+      }
+
       await (pack as any).documentClass.createDocuments(toCreate, { pack: data.packId });
 
       return {
         success: true,
         exported: toCreate.length,
+        cleared,
         folderName: folder.name,
         packId: data.packId,
-        message: `Exported ${toCreate.length} documents from "${folder.name}" to compendium "${pack.metadata.label}"`,
+        message: `${data.clearFirst ? `Cleared ${cleared} existing entries. ` : ''}Exported ${toCreate.length} documents from "${folder.name}" to compendium "${pack.metadata.label}"`,
       };
     } catch (error) {
       throw new Error(`Failed to export folder to compendium: ${error instanceof Error ? error.message : 'Unknown error'}`);
