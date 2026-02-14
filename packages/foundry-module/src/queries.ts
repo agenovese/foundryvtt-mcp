@@ -1720,7 +1720,11 @@ export class QueryHandlers {
         }
       }
 
-      await (pack as any).documentClass.createDocuments(toCreate, { pack: data.packId });
+      // Use keepId to preserve pre-generated _id values for cross-referencing
+      const hasIds = toCreate.some((d: any) => d._id);
+      const createOpts: any = { pack: data.packId };
+      if (hasIds) createOpts.keepId = true;
+      await (pack as any).documentClass.createDocuments(toCreate, createOpts);
 
       return {
         success: true,

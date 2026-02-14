@@ -5825,11 +5825,15 @@ export class FoundryDataAccess {
         return clean;
       });
 
+      // Use keepId to preserve pre-generated _id values for cross-referencing
+      const hasIds = cleanDocs.some((d: any) => d._id);
+      const createOpts: any = hasIds ? { keepId: true } : {};
+
       let createdDocs: any[];
       if (documentType === 'Actor') {
-        createdDocs = await Actor.createDocuments(cleanDocs as any);
+        createdDocs = await Actor.createDocuments(cleanDocs as any, createOpts);
       } else {
-        createdDocs = await Item.createDocuments(cleanDocs as any);
+        createdDocs = await Item.createDocuments(cleanDocs as any, createOpts);
       }
 
       const results = (createdDocs || []).map((doc: any) => ({
