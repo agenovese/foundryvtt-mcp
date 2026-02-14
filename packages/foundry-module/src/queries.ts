@@ -1713,11 +1713,32 @@ export class QueryHandlers {
       // Optionally clear existing pack contents before exporting
       let cleared = 0;
       if (data.clearFirst) {
+        // Ensure pack is unlocked before deleting
+        if (pack.locked) {
+          await pack.configure({ locked: false });
+        }
+        console.log(`[MCP] clearFirst: pack ${data.packId}, locked=${pack.locked}`);
         const existingIds = (await pack.getIndex()).map((e: any) => e._id);
+        console.log(`[MCP] clearFirst: found ${existingIds.length} existing entries to delete`);
         if (existingIds.length > 0) {
-          await (pack as any).documentClass.deleteDocuments(existingIds, { pack: data.packId });
+          // Delete in chunks to avoid timeouts on large packs
+          const chunkSize = 100;
+          for (let i = 0; i < existingIds.length; i += chunkSize) {
+            const chunk = existingIds.slice(i, i + chunkSize);
+            try {
+              await (pack as any).documentClass.deleteDocuments(chunk, { pack: data.packId });
+              console.log(`[MCP] clearFirst: deleted chunk ${Math.floor(i/chunkSize) + 1} (${chunk.length} items)`);
+            } catch (err: any) {
+              console.error(`[MCP] clearFirst: delete chunk failed:`, err?.message || err);
+            }
+          }
           cleared = existingIds.length;
         }
+      }
+
+      // Ensure pack is unlocked for writing
+      if (pack.locked) {
+        await pack.configure({ locked: false });
       }
 
       // Use keepId to preserve pre-generated _id values for cross-referencing
