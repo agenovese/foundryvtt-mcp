@@ -1695,9 +1695,15 @@ export class QueryHandlers {
       }
 
       // Export documents to the compendium pack
+      // Preserve valid Foundry IDs (16-char alphanumeric) for cross-referencing
+      const isValidFoundryId = (id: unknown): boolean =>
+        typeof id === 'string' && /^[a-zA-Z0-9]{16}$/.test(id);
+
       const toCreate = documents.map((d: any) => {
         const docData = d.toObject();
-        delete docData._id;
+        if (!isValidFoundryId(docData._id)) {
+          delete docData._id;
+        }
         delete docData.folder;
         docData._key = undefined;
         return docData;
