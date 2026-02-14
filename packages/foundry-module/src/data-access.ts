@@ -5791,21 +5791,31 @@ export class FoundryDataAccess {
     try {
       const { documentType, documents, folderId } = request;
 
-      // Clean all documents - strip _id and add folder
+      // Clean all documents - preserve valid Foundry IDs (16-char alphanumeric),
+      // strip invalid ones, and add folder
+      const isValidFoundryId = (id: unknown): boolean =>
+        typeof id === 'string' && /^[a-zA-Z0-9]{16}$/.test(id);
+
       const cleanDocs = documents.map((data: Record<string, any>) => {
         const clean = { ...data };
-        delete clean._id;
+        if (!isValidFoundryId(clean._id)) {
+          delete clean._id;
+        }
         if (Array.isArray(clean.items)) {
           clean.items = clean.items.map((item: any) => {
             const ci = { ...item };
-            delete ci._id;
+            if (!isValidFoundryId(ci._id)) {
+              delete ci._id;
+            }
             return ci;
           });
         }
         if (Array.isArray(clean.effects)) {
           clean.effects = clean.effects.map((effect: any) => {
             const ce = { ...effect };
-            delete ce._id;
+            if (!isValidFoundryId(ce._id)) {
+              delete ce._id;
+            }
             return ce;
           });
         }
