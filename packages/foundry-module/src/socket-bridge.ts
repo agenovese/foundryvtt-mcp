@@ -259,6 +259,9 @@ export class SocketBridge {
   private async handleMCPQuery(data: any, callback: (response: any) => void): Promise<void> {
     try {
       this.log(`Handling MCP query: ${data.method}`);
+      if (data.method?.includes('exportFolder')) {
+        console.log(`[MCP] Query data for exportFolder:`, JSON.stringify(data));
+      }
 
       // Check if the query handler exists in CONFIG.queries
       const queryKey = data.method; // Method already includes full path like 'foundry-mcp-bridge.listActors'

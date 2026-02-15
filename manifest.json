@@ -1,0 +1,3699 @@
+{
+  "folders": [
+    {
+      "name": "Baldurs Gate - The Fall of Elturel",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Baldurs Gate - The Fall of Elturel"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Baldurs Gate - The Fall of Elturel"
+      ],
+      "path": [
+        "Baldurs Gate - The Fall of Elturel",
+        "Items"
+      ]
+    },
+    {
+      "name": "Curse of Strahd",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Curse of Strahd"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Curse of Strahd"
+      ],
+      "path": [
+        "Curse of Strahd",
+        "Items"
+      ]
+    },
+    {
+      "name": "Deep Magic",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Deep Magic"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic"
+      ],
+      "path": [
+        "Deep Magic",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Items"
+      ],
+      "path": [
+        "Deep Magic",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Items"
+      ],
+      "path": [
+        "Deep Magic",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Items"
+      ],
+      "path": [
+        "Deep Magic",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "5th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "5th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "7th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "7th Level"
+      ]
+    },
+    {
+      "name": "8th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "8th Level"
+      ]
+    },
+    {
+      "name": "9th Level",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "9th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Deep Magic",
+        "Spells"
+      ],
+      "path": [
+        "Deep Magic",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Dragon Heist",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Dragon Heist"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Dragon Heist"
+      ],
+      "path": [
+        "Dragon Heist",
+        "Items"
+      ]
+    },
+    {
+      "name": "Dragonlance - Shadow of the Dragon Queen",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Dragonlance - Shadow of the Dragon Queen"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Dragonlance - Shadow of the Dragon Queen"
+      ],
+      "path": [
+        "Dragonlance - Shadow of the Dragon Queen",
+        "Items"
+      ]
+    },
+    {
+      "name": "Dungeon Master's Guide",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Dungeon Master's Guide"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide"
+      ],
+      "path": [
+        "Dungeon Master's Guide",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Dungeon Master's Guide (2024)",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Dungeon Master's Guide (2024)"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide (2024)"
+      ],
+      "path": [
+        "Dungeon Master's Guide (2024)",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items"
+      ],
+      "path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Esper Genesis Core Manual",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Esper Genesis Core Manual"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Tools",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Tools"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Items"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "5th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "5th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "7th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "7th Level"
+      ]
+    },
+    {
+      "name": "8th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "8th Level"
+      ]
+    },
+    {
+      "name": "9th Level",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "9th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Esper Genesis Core Manual",
+        "Spells"
+      ],
+      "path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Exploring Eberron",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Exploring Eberron"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Exploring Eberron"
+      ],
+      "path": [
+        "Exploring Eberron",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Exploring Eberron",
+        "Items"
+      ],
+      "path": [
+        "Exploring Eberron",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Exploring Eberron",
+        "Items"
+      ],
+      "path": [
+        "Exploring Eberron",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Exploring Eberron"
+      ],
+      "path": [
+        "Exploring Eberron",
+        "Spells"
+      ]
+    },
+    {
+      "name": "Forgotten Realms - Adventures in Faerun",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Forgotten Realms - Adventures in Faerun"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Forgotten Realms - Adventures in Faerun"
+      ],
+      "path": [
+        "Forgotten Realms - Adventures in Faerun",
+        "Items"
+      ]
+    },
+    {
+      "name": "Forgotten Realms - Heroes of Faerun",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Forgotten Realms - Heroes of Faerun"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Forgotten Realms - Heroes of Faerun"
+      ],
+      "path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Forgotten Realms - Heroes of Faerun"
+      ],
+      "path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Spells"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Spells"
+      ],
+      "path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Ghosts of Saltmarsh",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Ghosts of Saltmarsh"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Ghosts of Saltmarsh"
+      ],
+      "path": [
+        "Ghosts of Saltmarsh",
+        "Items"
+      ]
+    },
+    {
+      "name": "Lost Mine of Phandelver",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Lost Mine of Phandelver"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Lost Mine of Phandelver"
+      ],
+      "path": [
+        "Lost Mine of Phandelver",
+        "Items"
+      ]
+    },
+    {
+      "name": "Monster Manual",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Monster Manual"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Monster Manual"
+      ],
+      "path": [
+        "Monster Manual",
+        "Items"
+      ]
+    },
+    {
+      "name": "Mordenkainen's Tome of Foes",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Mordenkainen's Tome of Foes"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Mordenkainen's Tome of Foes"
+      ],
+      "path": [
+        "Mordenkainen's Tome of Foes",
+        "Items"
+      ]
+    },
+    {
+      "name": "Mordenkainen's Tome of Marvelous Magic",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Mordenkainen's Tome of Marvelous Magic"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Mordenkainen's Tome of Marvelous Magic"
+      ],
+      "path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items"
+      ],
+      "path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items"
+      ],
+      "path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Player's Handbook",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Player's Handbook"
+      ]
+    },
+    {
+      "name": "Backgrounds",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Backgrounds"
+      ]
+    },
+    {
+      "name": "Feats",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Feats"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Items"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Items"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Tools",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Items"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Items",
+        "Tools"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Items"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Races & Species",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Races & Species"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "5th Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "5th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "8th Level",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "8th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook",
+        "Spells"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Subclasses",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook"
+      ],
+      "path": [
+        "Player's Handbook",
+        "Subclasses"
+      ]
+    },
+    {
+      "name": "Player's Handbook (2024)",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Player's Handbook (2024)"
+      ]
+    },
+    {
+      "name": "Backgrounds",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Backgrounds"
+      ]
+    },
+    {
+      "name": "Feats",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Feats"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Items"
+      ]
+    },
+    {
+      "name": "Races & Species",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Races & Species"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Spells"
+      ]
+    },
+    {
+      "name": "Subclasses",
+      "type": "Item",
+      "parent_path": [
+        "Player's Handbook (2024)"
+      ],
+      "path": [
+        "Player's Handbook (2024)",
+        "Subclasses"
+      ]
+    },
+    {
+      "name": "Strixhaven A Curriculum of Chaos",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Strixhaven A Curriculum of Chaos"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Strixhaven A Curriculum of Chaos"
+      ],
+      "path": [
+        "Strixhaven A Curriculum of Chaos",
+        "Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Strixhaven A Curriculum of Chaos"
+      ],
+      "path": [
+        "Strixhaven A Curriculum of Chaos",
+        "Spells"
+      ]
+    },
+    {
+      "name": "Sword Coast Adventurer's Guide",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Sword Coast Adventurer's Guide"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Sword Coast Adventurer's Guide"
+      ],
+      "path": [
+        "Sword Coast Adventurer's Guide",
+        "Items"
+      ]
+    },
+    {
+      "name": "Tales from the Yawning Portal",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Tales from the Yawning Portal"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Tales from the Yawning Portal"
+      ],
+      "path": [
+        "Tales from the Yawning Portal",
+        "Items"
+      ]
+    },
+    {
+      "name": "Tasha's Cauldron of Everything",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Tasha's Cauldron of Everything"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Items"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Items"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "5th Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "5th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "7th Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "7th Level"
+      ]
+    },
+    {
+      "name": "9th Level",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "9th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells"
+      ],
+      "path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Tavern Tales Vol 1 - A Trip Away Inn",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn"
+      ],
+      "path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Spells"
+      ]
+    },
+    {
+      "name": "The Complete Hag",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "The Complete Hag"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Items"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Items"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Items"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Wondrous Items",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Items"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Items",
+        "Wondrous Items"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "The Complete Hag",
+        "Spells"
+      ],
+      "path": [
+        "The Complete Hag",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Tome of Beasts 2",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Tome of Beasts 2"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Tome of Beasts 2"
+      ],
+      "path": [
+        "Tome of Beasts 2",
+        "Items"
+      ]
+    },
+    {
+      "name": "Uncaged Volume 1",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Uncaged Volume 1"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Uncaged Volume 1"
+      ],
+      "path": [
+        "Uncaged Volume 1",
+        "Items"
+      ]
+    },
+    {
+      "name": "Van Richten's Guide To Ravenloft",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Van Richten's Guide To Ravenloft"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Van Richten's Guide To Ravenloft"
+      ],
+      "path": [
+        "Van Richten's Guide To Ravenloft",
+        "Items"
+      ]
+    },
+    {
+      "name": "Volo's Guide to Monsters",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Volo's Guide to Monsters"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Volo's Guide to Monsters"
+      ],
+      "path": [
+        "Volo's Guide to Monsters",
+        "Items"
+      ]
+    },
+    {
+      "name": "Races & Species",
+      "type": "Item",
+      "parent_path": [
+        "Volo's Guide to Monsters"
+      ],
+      "path": [
+        "Volo's Guide to Monsters",
+        "Races & Species"
+      ]
+    },
+    {
+      "name": "Waterdeep - Dungeon of the Mad Mage",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Waterdeep - Dungeon of the Mad Mage"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Waterdeep - Dungeon of the Mad Mage"
+      ],
+      "path": [
+        "Waterdeep - Dungeon of the Mad Mage",
+        "Items"
+      ]
+    },
+    {
+      "name": "Xanathar's Guide to Everything",
+      "type": "Item",
+      "parent": null,
+      "path": [
+        "Xanathar's Guide to Everything"
+      ]
+    },
+    {
+      "name": "Items",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Items"
+      ]
+    },
+    {
+      "name": "Armor & Shields",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Items"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Armor & Shields"
+      ]
+    },
+    {
+      "name": "Consumables",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Items"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Consumables"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Items"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Weapons"
+      ]
+    },
+    {
+      "name": "Spells",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ]
+    },
+    {
+      "name": "1st Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "1st Level"
+      ]
+    },
+    {
+      "name": "2nd Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "2nd Level"
+      ]
+    },
+    {
+      "name": "3rd Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "3rd Level"
+      ]
+    },
+    {
+      "name": "4th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "4th Level"
+      ]
+    },
+    {
+      "name": "5th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "5th Level"
+      ]
+    },
+    {
+      "name": "6th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "6th Level"
+      ]
+    },
+    {
+      "name": "7th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "7th Level"
+      ]
+    },
+    {
+      "name": "8th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "8th Level"
+      ]
+    },
+    {
+      "name": "9th Level",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "9th Level"
+      ]
+    },
+    {
+      "name": "Cantrips",
+      "type": "Item",
+      "parent_path": [
+        "Xanathar's Guide to Everything",
+        "Spells"
+      ],
+      "path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "Cantrips"
+      ]
+    },
+    {
+      "name": "Baldurs Gate - The Fall of Elturel",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Baldurs Gate - The Fall of Elturel"
+      ]
+    },
+    {
+      "name": "Curse of Strahd",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Curse of Strahd"
+      ]
+    },
+    {
+      "name": "Deep Magic",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Deep Magic"
+      ]
+    },
+    {
+      "name": "Dragon Heist",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Dragon Heist"
+      ]
+    },
+    {
+      "name": "Dragonlance - Shadow of the Dragon Queen",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Dragonlance - Shadow of the Dragon Queen"
+      ]
+    },
+    {
+      "name": "Dungeon Master's Guide",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Dungeon Master's Guide"
+      ]
+    },
+    {
+      "name": "Esper Genesis Core Manual",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Esper Genesis Core Manual"
+      ]
+    },
+    {
+      "name": "Exploring Eberron",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Exploring Eberron"
+      ]
+    },
+    {
+      "name": "Forgotten Realms - Adventures in Faerun",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Forgotten Realms - Adventures in Faerun"
+      ]
+    },
+    {
+      "name": "Forgotten Realms - Heroes of Faerun",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Forgotten Realms - Heroes of Faerun"
+      ]
+    },
+    {
+      "name": "Ghosts of Saltmarsh",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Ghosts of Saltmarsh"
+      ]
+    },
+    {
+      "name": "Lost Mine of Phandelver",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Lost Mine of Phandelver"
+      ]
+    },
+    {
+      "name": "Monster Manual",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Monster Manual"
+      ]
+    },
+    {
+      "name": "Monster Manual (2024)",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Monster Manual (2024)"
+      ]
+    },
+    {
+      "name": "Monster Manual Expanded",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Monster Manual Expanded"
+      ]
+    },
+    {
+      "name": "Mordenkainen's Tome of Foes",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Mordenkainen's Tome of Foes"
+      ]
+    },
+    {
+      "name": "Player's Handbook (2024)",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Player's Handbook (2024)"
+      ]
+    },
+    {
+      "name": "Strixhaven A Curriculum of Chaos",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Strixhaven A Curriculum of Chaos"
+      ]
+    },
+    {
+      "name": "Tales from the Yawning Portal",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Tales from the Yawning Portal"
+      ]
+    },
+    {
+      "name": "Tasha's Cauldron of Everything",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Tasha's Cauldron of Everything"
+      ]
+    },
+    {
+      "name": "Tavern Tales Vol 1 - A Trip Away Inn",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Tavern Tales Vol 1 - A Trip Away Inn"
+      ]
+    },
+    {
+      "name": "The Complete Hag",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "The Complete Hag"
+      ]
+    },
+    {
+      "name": "Tome of Beasts",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Tome of Beasts"
+      ]
+    },
+    {
+      "name": "Tome of Beasts 2",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Tome of Beasts 2"
+      ]
+    },
+    {
+      "name": "Uncaged Volume 1",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Uncaged Volume 1"
+      ]
+    },
+    {
+      "name": "Van Richten's Guide To Ravenloft",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Van Richten's Guide To Ravenloft"
+      ]
+    },
+    {
+      "name": "Volo's Guide to Monsters",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Volo's Guide to Monsters"
+      ]
+    },
+    {
+      "name": "Waterdeep - Dungeon of the Mad Mage",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Waterdeep - Dungeon of the Mad Mage"
+      ]
+    },
+    {
+      "name": "Xanathar's Guide to Everything",
+      "type": "Actor",
+      "parent": null,
+      "path": [
+        "actor",
+        "Xanathar's Guide to Everything"
+      ]
+    }
+  ],
+  "batches": [
+    {
+      "folder_path": [
+        "Baldurs Gate - The Fall of Elturel",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0000.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Curse of Strahd",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0001.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0002.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0003.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0004.json",
+      "count": 6
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0005.json",
+      "count": 113
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0006.json",
+      "count": 132
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0007.json",
+      "count": 125
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0008.json",
+      "count": 98
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "5th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0009.json",
+      "count": 68
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0010.json",
+      "count": 41
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "7th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0011.json",
+      "count": 37
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "8th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0012.json",
+      "count": 28
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "9th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0013.json",
+      "count": 17
+    },
+    {
+      "folder_path": [
+        "Deep Magic",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0014.json",
+      "count": 55
+    },
+    {
+      "folder_path": [
+        "Dragon Heist",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0015.json",
+      "count": 13
+    },
+    {
+      "folder_path": [
+        "Dragonlance - Shadow of the Dragon Queen",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0016.json",
+      "count": 10
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0017.json",
+      "count": 207
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0018.json",
+      "count": 30
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0019.json",
+      "count": 78
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0020.json",
+      "count": 22
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0021.json",
+      "count": 223
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0022.json",
+      "count": 131
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0023.json",
+      "count": 624
+    },
+    {
+      "folder_path": [
+        "Dungeon Master's Guide (2024)",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0024.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0025.json",
+      "count": 25
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0026.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Tools"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0027.json",
+      "count": 13
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0028.json",
+      "count": 25
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0029.json",
+      "count": 59
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0030.json",
+      "count": 53
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0031.json",
+      "count": 46
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0032.json",
+      "count": 40
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0033.json",
+      "count": 27
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "5th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0034.json",
+      "count": 28
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0035.json",
+      "count": 19
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "7th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0036.json",
+      "count": 16
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "8th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0037.json",
+      "count": 13
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "9th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0038.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "Esper Genesis Core Manual",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0039.json",
+      "count": 26
+    },
+    {
+      "folder_path": [
+        "Exploring Eberron",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0040.json",
+      "count": 49
+    },
+    {
+      "folder_path": [
+        "Exploring Eberron",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0041.json",
+      "count": 33
+    },
+    {
+      "folder_path": [
+        "Exploring Eberron",
+        "Spells"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0042.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Forgotten Realms - Adventures in Faerun",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0043.json",
+      "count": 14
+    },
+    {
+      "folder_path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0044.json",
+      "count": 17
+    },
+    {
+      "folder_path": [
+        "Forgotten Realms - Heroes of Faerun",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0045.json",
+      "count": 18
+    },
+    {
+      "folder_path": [
+        "Ghosts of Saltmarsh",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0046.json",
+      "count": 6
+    },
+    {
+      "folder_path": [
+        "Lost Mine of Phandelver",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0047.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "Monster Manual",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0048.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Mordenkainen's Tome of Foes",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0049.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0050.json",
+      "count": 196
+    },
+    {
+      "folder_path": [
+        "Mordenkainen's Tome of Marvelous Magic",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0051.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Backgrounds"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0052.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Feats"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0053.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0054.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0055.json",
+      "count": 6
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Items",
+        "Tools"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0056.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0057.json",
+      "count": 13
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Races & Species"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0058.json",
+      "count": 9
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0059.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0060.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0061.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0062.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "5th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0063.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0064.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "8th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0065.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0066.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Player's Handbook",
+        "Subclasses"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0067.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Backgrounds"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0068.json",
+      "count": 16
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Feats"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0069.json",
+      "count": 75
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0070.json",
+      "count": 16
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Races & Species"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0071.json",
+      "count": 10
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Spells"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0072.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Player's Handbook (2024)",
+        "Subclasses"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0073.json",
+      "count": 48
+    },
+    {
+      "folder_path": [
+        "Strixhaven A Curriculum of Chaos",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0074.json",
+      "count": 10
+    },
+    {
+      "folder_path": [
+        "Strixhaven A Curriculum of Chaos",
+        "Spells"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0075.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Sword Coast Adventurer's Guide",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0076.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "Tales from the Yawning Portal",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0077.json",
+      "count": 18
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0078.json",
+      "count": 71
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0079.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0080.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0081.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0082.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0083.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "5th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0084.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0085.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "7th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0086.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "9th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0087.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Tasha's Cauldron of Everything",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0088.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0089.json",
+      "count": 21
+    },
+    {
+      "folder_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0090.json",
+      "count": 18
+    },
+    {
+      "folder_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0091.json",
+      "count": 6
+    },
+    {
+      "folder_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0092.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Tavern Tales Vol 1 - A Trip Away Inn",
+        "Spells"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0093.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0094.json",
+      "count": 31
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0095.json",
+      "count": 23
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0096.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Items",
+        "Wondrous Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0097.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0098.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0099.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0100.json",
+      "count": 6
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0101.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0102.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "The Complete Hag",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0103.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Tome of Beasts 2",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0104.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Uncaged Volume 1",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0105.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "Van Richten's Guide To Ravenloft",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0106.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "Volo's Guide to Monsters",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0107.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "Volo's Guide to Monsters",
+        "Races & Species"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0108.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Waterdeep - Dungeon of the Mad Mage",
+        "Items"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0109.json",
+      "count": 2
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Armor & Shields"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0110.json",
+      "count": 73
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Consumables"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0111.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Items",
+        "Weapons"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0112.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "1st Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0113.json",
+      "count": 9
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "2nd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0114.json",
+      "count": 10
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "3rd Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0115.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "4th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0116.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "5th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0117.json",
+      "count": 16
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "6th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0118.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "7th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0119.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "8th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0120.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "9th Level"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0121.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "Xanathar's Guide to Everything",
+        "Spells",
+        "Cantrips"
+      ],
+      "doc_type": "Item",
+      "file": "batch_0122.json",
+      "count": 12
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Baldurs Gate - The Fall of Elturel"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0123.json",
+      "count": 3
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Curse of Strahd"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0124.json",
+      "count": 20
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Deep Magic"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0125.json",
+      "count": 4
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Dragon Heist"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0126.json",
+      "count": 25
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Dragonlance - Shadow of the Dragon Queen"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0127.json",
+      "count": 88
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Dungeon Master's Guide"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0128.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Esper Genesis Core Manual"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0129.json",
+      "count": 24
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Exploring Eberron"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0130.json",
+      "count": 8
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Forgotten Realms - Adventures in Faerun"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0131.json",
+      "count": 40
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Forgotten Realms - Heroes of Faerun"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0132.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Ghosts of Saltmarsh"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0133.json",
+      "count": 55
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Lost Mine of Phandelver"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0134.json",
+      "count": 5
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Monster Manual"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0135.json",
+      "count": 130
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Monster Manual (2024)"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0136.json",
+      "count": 126
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Monster Manual Expanded"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0137.json",
+      "count": 491
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Mordenkainen's Tome of Foes"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0138.json",
+      "count": 247
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Player's Handbook (2024)"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0139.json",
+      "count": 15
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Strixhaven A Curriculum of Chaos"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0140.json",
+      "count": 45
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Tales from the Yawning Portal"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0141.json",
+      "count": 26
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Tasha's Cauldron of Everything"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0142.json",
+      "count": 44
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Tavern Tales Vol 1 - A Trip Away Inn"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0143.json",
+      "count": 1
+    },
+    {
+      "folder_path": [
+        "actor",
+        "The Complete Hag"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0144.json",
+      "count": 49
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Tome of Beasts"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0145.json",
+      "count": 410
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Tome of Beasts 2"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0146.json",
+      "count": 402
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Uncaged Volume 1"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0147.json",
+      "count": 10
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Van Richten's Guide To Ravenloft"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0148.json",
+      "count": 35
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Volo's Guide to Monsters"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0149.json",
+      "count": 138
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Waterdeep - Dungeon of the Mad Mage"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0150.json",
+      "count": 7
+    },
+    {
+      "folder_path": [
+        "actor",
+        "Xanathar's Guide to Everything"
+      ],
+      "doc_type": "Actor",
+      "file": "batch_0151.json",
+      "count": 1
+    }
+  ]
+}
