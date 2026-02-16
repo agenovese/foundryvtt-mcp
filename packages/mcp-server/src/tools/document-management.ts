@@ -347,7 +347,7 @@ export class DocumentManagementTools {
 
   async handleUpdateDocument(args: any): Promise<any> {
     const schema = z.object({
-      documentType: z.enum(['Actor', 'Item']),
+      documentType: z.enum(['Actor', 'Item', 'JournalEntry', 'RollTable']),
       documentId: z.string().min(1, 'Document ID is required'),
       updates: z.record(z.any()).optional(),
       addItems: z.array(z.object({
@@ -413,7 +413,7 @@ export class DocumentManagementTools {
 
   async handleDeleteDocument(args: any): Promise<any> {
     const schema = z.object({
-      documentType: z.enum(['Actor', 'Item']),
+      documentType: z.enum(['Actor', 'Item', 'JournalEntry', 'RollTable']),
       documentId: z.string().min(1, 'Document ID is required'),
     });
 

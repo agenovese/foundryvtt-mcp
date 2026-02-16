@@ -5857,7 +5857,7 @@ export class FoundryDataAccess {
    * Update an existing document (Actor or Item) with partial data, add/remove embedded items
    */
   async updateDocument(request: {
-    documentType: 'Actor' | 'Item';
+    documentType: 'Actor' | 'Item' | 'JournalEntry' | 'RollTable';
     documentId: string;
     updates?: Record<string, any> | undefined;
     addItems?: Array<Record<string, any>> | undefined;
@@ -5877,8 +5877,12 @@ export class FoundryDataAccess {
       let doc: any;
       if (documentType === 'Actor') {
         doc = game.actors?.get(documentId);
-      } else {
+      } else if (documentType === 'Item') {
         doc = game.items?.get(documentId);
+      } else if (documentType === 'JournalEntry') {
+        doc = game.journal?.get(documentId);
+      } else if (documentType === 'RollTable') {
+        doc = game.tables?.get(documentId);
       }
 
       if (!doc) {
@@ -5944,7 +5948,7 @@ export class FoundryDataAccess {
    * Delete a document (Actor or Item) by ID
    */
   async deleteDocument(request: {
-    documentType: 'Actor' | 'Item';
+    documentType: 'Actor' | 'Item' | 'JournalEntry' | 'RollTable';
     documentId: string;
   }): Promise<{ name: string }> {
     this.validateFoundryState();
@@ -5960,8 +5964,12 @@ export class FoundryDataAccess {
       let doc: any;
       if (documentType === 'Actor') {
         doc = game.actors?.get(documentId);
-      } else {
+      } else if (documentType === 'Item') {
         doc = game.items?.get(documentId);
+      } else if (documentType === 'JournalEntry') {
+        doc = game.journal?.get(documentId);
+      } else if (documentType === 'RollTable') {
+        doc = game.tables?.get(documentId);
       }
 
       if (!doc) {

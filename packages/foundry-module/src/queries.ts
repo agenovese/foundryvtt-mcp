@@ -1648,7 +1648,6 @@ export class QueryHandlers {
     clearFirst?: boolean;
   }): Promise<any> {
     try {
-      console.log(`[MCP] exportFolderToCompendium called with:`, JSON.stringify(data));
       const gmCheck = this.validateGMAccess();
       if (!gmCheck.allowed) {
         return { error: 'Access denied', success: false };
