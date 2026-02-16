@@ -1396,8 +1396,8 @@ export class QueryHandlers {
       if (!data.data.type || typeof data.data.type !== 'string') {
         throw new Error('data.type is required and must be a string');
       }
-      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
-        throw new Error('documentType must be "Actor" or "Item"');
+      if (!data.documentType || !['Actor', 'Item', 'JournalEntry', 'RollTable'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor", "Item", "JournalEntry", or "RollTable"');
       }
 
       return await this.dataAccess.createDocument({
@@ -1426,8 +1426,8 @@ export class QueryHandlers {
 
       this.dataAccess.validateFoundryState();
 
-      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
-        throw new Error('documentType must be "Actor" or "Item"');
+      if (!data.documentType || !['Actor', 'Item', 'JournalEntry', 'RollTable'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor", "Item", "JournalEntry", or "RollTable"');
       }
       if (!Array.isArray(data.documents) || data.documents.length === 0) {
         throw new Error('documents array is required and must not be empty');
@@ -1467,8 +1467,8 @@ export class QueryHandlers {
       if (!data.documentId || typeof data.documentId !== 'string') {
         throw new Error('documentId is required');
       }
-      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
-        throw new Error('documentType must be "Actor" or "Item"');
+      if (!data.documentType || !['Actor', 'Item', 'JournalEntry', 'RollTable'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor", "Item", "JournalEntry", or "RollTable"');
       }
       if (!data.updates && !data.addItems && !data.removeItemIds) {
         throw new Error('At least one of updates, addItems, or removeItemIds must be provided');
@@ -1504,8 +1504,8 @@ export class QueryHandlers {
       if (!data.documentId || typeof data.documentId !== 'string') {
         throw new Error('documentId is required');
       }
-      if (!data.documentType || !['Actor', 'Item'].includes(data.documentType)) {
-        throw new Error('documentType must be "Actor" or "Item"');
+      if (!data.documentType || !['Actor', 'Item', 'JournalEntry', 'RollTable'].includes(data.documentType)) {
+        throw new Error('documentType must be "Actor", "Item", "JournalEntry", or "RollTable"');
       }
 
       return await this.dataAccess.deleteDocument({
