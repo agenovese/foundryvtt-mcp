@@ -48,6 +48,7 @@ export class QueryHandlers {
 
     // Utility queries
     CONFIG.queries[`${modulePrefix}.ping`] = this.handlePing.bind(this);
+    CONFIG.queries[`${modulePrefix}.echo`] = this.handleEcho.bind(this);
 
     // Phase 2 & 3: Write operation queries
     CONFIG.queries[`${modulePrefix}.createActorFromCompendium`] = this.handleCreateActorFromCompendium.bind(this);
@@ -365,9 +366,20 @@ export class QueryHandlers {
       status: 'ok',
       timestamp: Date.now(),
       module: MODULE_ID,
-      foundryVersion: game.version,
+      foundryVersion: (game as any).version,
       worldId: game.world?.id,
       userId: game.user?.id,
+    };
+  }
+
+  /**
+   * Handle echo request for diagnostics
+   */
+  private async handleEcho(data: any): Promise<any> {
+    return {
+      status: 'ok',
+      timestamp: Date.now(),
+      echo: data
     };
   }
 

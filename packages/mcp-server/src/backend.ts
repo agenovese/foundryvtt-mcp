@@ -38,6 +38,8 @@ import { DocumentManagementTools } from './tools/document-management.js';
 
 import { AdventureImportTools } from './tools/adventure-import.js';
 
+import { DiagnosticTools } from './tools/diagnostics.js';
+
 import { DSA5CharacterCreator } from './systems/dsa5/character-creator.js';
 
 const CONTROL_HOST = '127.0.0.1';
@@ -1086,6 +1088,10 @@ async function startBackend(): Promise<void> {
 
   const adventureImportTools = new AdventureImportTools({ foundryClient, logger });
 
+  const diagnosticTools = new DiagnosticTools(foundryClient, logger);
+
+
+
   // Initialize mapgen-style backend components for map generation
   let mapGenerationJobQueue: any = null;
   let mapGenerationComfyUIClient: any = null;
@@ -1322,6 +1328,8 @@ async function startBackend(): Promise<void> {
     ...documentManagementTools.getToolDefinitions(),
 
     ...adventureImportTools.getToolDefinitions(),
+
+    ...diagnosticTools.getToolDefinitions(),
 
   ];
 
@@ -1795,6 +1803,12 @@ async function startBackend(): Promise<void> {
                 case 'update-compendium-entry':
 
                   result = await adventureImportTools.handleUpdateCompendiumEntry(args);
+
+                  break;
+
+                case 'check-bridge-status':
+
+                  result = await diagnosticTools.handleCheckBridgeStatus(args);
 
                   break;
 

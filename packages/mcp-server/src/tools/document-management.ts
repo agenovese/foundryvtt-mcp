@@ -23,13 +23,13 @@ export class DocumentManagementTools {
     return [
       {
         name: 'create-document',
-        description: 'Create a Foundry VTT document (Actor or Item) from raw JSON data. Use get-compendium-entry-full to inspect an existing document\'s schema, then construct your own data object matching that schema. The data object must include at least "name" and "type" fields. Supports any actor/item type the game system defines.',
+        description: 'Create a Foundry VTT document (Actor, Item, JournalEntry, or RollTable) from raw JSON data. Use get-compendium-entry-full to inspect an existing document\'s schema, then construct your own data object matching that schema. The data object must include at least "name" and "type" fields. Supports any actor/item type the game system defines.',
         inputSchema: {
           type: 'object',
           properties: {
             documentType: {
               type: 'string',
-              enum: ['Actor', 'Item'],
+              enum: ['Actor', 'Item', 'JournalEntry', 'RollTable'],
               description: 'The Foundry document type to create',
             },
             data: {
@@ -46,13 +46,13 @@ export class DocumentManagementTools {
       },
       {
         name: 'batch-create-documents',
-        description: 'Batch create multiple Foundry VTT documents at once. Much faster than calling create-document repeatedly. All documents must be the same type (Actor or Item). Documents are created in a single Foundry API call.',
+        description: 'Batch create multiple Foundry VTT documents at once. Much faster than calling create-document repeatedly. All documents must be the same type (Actor, Item, JournalEntry, or RollTable). Documents are created in a single Foundry API call.',
         inputSchema: {
           type: 'object',
           properties: {
             documentType: {
               type: 'string',
-              enum: ['Actor', 'Item'],
+              enum: ['Actor', 'Item', 'JournalEntry', 'RollTable'],
               description: 'The Foundry document type to create',
             },
             documents: {
@@ -72,13 +72,13 @@ export class DocumentManagementTools {
       },
       {
         name: 'update-document',
-        description: 'Update an existing Foundry VTT document (Actor or Item). Supports partial updates via dot-notation keys (e.g., "system.hp.value": 50), adding embedded items to actors, and removing embedded items from actors. At least one of updates, addItems, or removeItemIds must be provided.',
+        description: 'Update an existing Foundry VTT document (Actor, Item, JournalEntry, or RollTable). Supports partial updates via dot-notation keys (e.g., "system.hp.value": 50), adding embedded items to actors, and removing embedded items from actors. At least one of updates, addItems, or removeItemIds must be provided.',
         inputSchema: {
           type: 'object',
           properties: {
             documentType: {
               type: 'string',
-              enum: ['Actor', 'Item'],
+              enum: ['Actor', 'Item', 'JournalEntry', 'RollTable'],
               description: 'The Foundry document type to update',
             },
             documentId: {
@@ -105,13 +105,13 @@ export class DocumentManagementTools {
       },
       {
         name: 'delete-document',
-        description: 'Delete a Foundry VTT document (Actor or Item) by ID. This is permanent and cannot be undone.',
+        description: 'Delete a Foundry VTT document (Actor, Item, JournalEntry, or RollTable) by ID. This is permanent and cannot be undone.',
         inputSchema: {
           type: 'object',
           properties: {
             documentType: {
               type: 'string',
-              enum: ['Actor', 'Item'],
+              enum: ['Actor', 'Item', 'JournalEntry', 'RollTable'],
               description: 'The Foundry document type to delete',
             },
             documentId: {
@@ -254,7 +254,7 @@ export class DocumentManagementTools {
 
   async handleCreateDocument(args: any): Promise<any> {
     const schema = z.object({
-      documentType: z.enum(['Actor', 'Item']),
+      documentType: z.enum(['Actor', 'Item', 'JournalEntry', 'RollTable']),
       data: z.object({
         name: z.string().min(1, 'Document name is required'),
         type: z.string().min(1, 'Document type is required'),
@@ -305,7 +305,7 @@ export class DocumentManagementTools {
 
   async handleBatchCreateDocuments(args: any): Promise<any> {
     const schema = z.object({
-      documentType: z.enum(['Actor', 'Item']),
+      documentType: z.enum(['Actor', 'Item', 'JournalEntry', 'RollTable']),
       documents: z.array(z.object({
         name: z.string().min(1, 'Document name is required'),
         type: z.string().min(1, 'Document type is required'),
